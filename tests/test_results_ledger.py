@@ -32,6 +32,37 @@ REGISTRY = {
 }
 
 
+def _absent_untracked_artifacts() -> list[str]:
+    """Registry-referenced artifacts that are gitignored and not on this machine.
+
+    CI checks out tracked files only, so the ~196 MB data/ tree never exists there
+    (ci.yml: "artifacts absent from disk are counted, not failed"). Locally the list
+    is empty and the byte-level tests below run with full force.
+    """
+
+    registry = json.loads(
+        (REPO_ROOT / "docs/experiment_registry.json").read_text(encoding="utf-8")
+    )
+    missing = []
+    for run in registry.get("runs", []):
+        for ref in run.get("artifact_refs", []):
+            if not ref.get("tracked", True) and not (REPO_ROOT / ref["path"]).exists():
+                missing.append(ref["path"])
+    return missing
+
+
+_ABSENT = _absent_untracked_artifacts()
+
+requires_artifacts = pytest.mark.skipif(
+    bool(_ABSENT),
+    reason=(
+        f"{len(_ABSENT)} gitignored evaluation artifacts are absent, so byte-level checks "
+        "cannot run here; CI still validates the ledger structure via "
+        "scripts/validate_results_ledger.py (ci.yml)"
+    ),
+)
+
+
 def make_claim(**overrides: object) -> dict[str, object]:
     claim: dict[str, object] = {
         "claim_id": "claim:example",
@@ -57,6 +88,7 @@ def check(claims: list[dict[str, object]], *, require_artifacts: bool = False) -
     )
 
 
+@requires_artifacts
 def test_real_ledger_validates_cleanly() -> None:
     ledger = json.loads((REPO_ROOT / "docs/results_ledger.json").read_text(encoding="utf-8"))
     registry = json.loads((REPO_ROOT / "docs/experiment_registry.json").read_text(encoding="utf-8"))
@@ -98,6 +130,7 @@ def test_absent_ledger_reports_without_traceback(
     assert "Traceback" not in message
 
 
+@requires_artifacts
 def test_real_ledger_passes_the_empty_floor() -> None:
     """The non-empty floor must not reject the real, populated ledger."""
 
