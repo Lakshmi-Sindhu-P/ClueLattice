@@ -19,8 +19,13 @@ jobs:
         with:
           python-version: "3.12"
 
+      # --all-extras: the storage and ui extras are optional BY DESIGN in pyproject.toml
+      # (the research library must not depend on a web server), but tests/test_ui_*.py,
+      # tests/test_storage_*.py and tests/test_ui_decision_store.py import fastapi/duckdb
+      # and abort collection without them. A groups-only sync made every run fail with
+      # "ModuleNotFoundError: No module named 'fastapi'" from 2026-10-08 onward.
       - name: Sync dependencies
-        run: uv sync --all-groups
+        run: uv sync --all-extras --all-groups
 
       - name: Run tests
         run: uv run pytest
