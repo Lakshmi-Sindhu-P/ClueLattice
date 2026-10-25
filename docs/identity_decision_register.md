@@ -1,4 +1,4 @@
-# AegisTrace Identity Decision Register
+# ClueLattice Identity Decision Register
 
 **Status: PROPOSED.** Decision record for four open issues. Each entry gives a Category verdict
 (**A** = engineering, safe to implement independently · **B** = product/architectural contract ·
@@ -31,10 +31,10 @@ A file whose header is structurally valid but contains **zero data rows** is acc
 complete success: `rows_seen=0 accepted=0 rejected=0 issues=0`, the CLI exits 0, and a manifest is
 written claiming `record_count=0`. Verified in both parsers.
 
-- `src/aegistrace/ingestion/ctu13.py::parse_ctu13_binetflow` builds the header issue only when the
+- `src/cluelattice/ingestion/ctu13.py::parse_ctu13_binetflow` builds the header issue only when the
   header does **not** match `_FIELDS` (lines 363–371); a matching header sets `header_valid = True`
   and produces no error, so a valid header followed by no rows yields an empty `issues` tuple.
-- `src/aegistrace/ingestion/iot23.py::parse_iot23_conn_log` appends the `missing #fields header`
+- `src/cluelattice/ingestion/iot23.py::parse_iot23_conn_log` appends the `missing #fields header`
   issue only when `fields is None` (lines 344–348); a recognised `#fields` header with no data rows
   leaves `issues` empty too.
 
@@ -103,7 +103,7 @@ settled together to avoid two conflicting deltas on the report.
 
 None directly. No identity, no model call, no egress. The relevance is data-validity/governance: a
 failed extraction or truncated download that leaves the header must not silently count as an
-ingested dataset, because AegisTrace's evidence claims would otherwise rest on "we ingested nothing
+ingested dataset, because ClueLattice's evidence claims would otherwise rest on "we ingested nothing
 and said nothing."
 
 ### 9. Recommended option and justification
@@ -133,14 +133,14 @@ they wrote. The library says there is one essay when there are two.
 
 ### 1. Current behaviour and the demonstrated failure
 
-`src/aegistrace/schemas/events.py::event_id_for` derives the id from five fields only:
+`src/cluelattice/schemas/events.py::event_id_for` derives the id from five fields only:
 
 ```python
 identity = json.dumps([source.source_type.value, source.source_dataset,
                        source.scenario_id, source.dataset_version, source.source_event_id], ...)
 ```
 
-`source_event_id` is built in `src/aegistrace/ingestion/ctu13.py:239` as `f"line-{line_number}"` —
+`source_event_id` is built in `src/cluelattice/ingestion/ctu13.py:239` as `f"line-{line_number}"` —
 per-file line numbering, not qualified by the file. `SourceRecordRef` carries `raw_checksum`
 (`events.py:24`) and ingestion already computes it (`ctu13.py:_sha256_file`), but `event_id_for`
 ignores it and every row field.
@@ -232,11 +232,11 @@ a second verdict at the same timestamp, so the audit trail loses a real decision
 
 ### 1. Current behaviour and the demonstrated failure
 
-`src/aegistrace/schemas/review.py::review_id_for(*, subject_triage_id, reviewer_ref, decision,
+`src/cluelattice/schemas/review.py::review_id_for(*, subject_triage_id, reviewer_ref, decision,
 reviewed_at)` derives the id from four inputs. It ignores `final_disposition`, `tier`, `notes`,
 `subject_role`, and `supersedes_review_id`. Because `reviewed_at` participates, and because
 `ReviewHistory` rejects duplicate ids, **two distinct dispositions at the same instant are
-unrepresentable**: `append_review` (`src/aegistrace/review/history.py:39`) refuses the second with
+unrepresentable**: `append_review` (`src/cluelattice/review/history.py:39`) refuses the second with
 "a review with this identity is already recorded".
 
 Executed (#40): four reviews differing only in `final_disposition` (`confirmed` vs
@@ -347,7 +347,7 @@ ACCEPTED = True`) — the `validate_subjects_match` validator never runs.
 The schema invariants — every review in a history shares the subject triage id, and a REVISE must
 reference its superseded review — are declared as `mode="after"` model validators, i.e. they are
 supposed to hold on **every** `HumanReview`/`ReviewHistory` instance by construction. The real
-guarantee today is not the schema but `src/aegistrace/review/history.py:25` (manual subject
+guarantee today is not the schema but `src/cluelattice/review/history.py:25` (manual subject
 `raise`) plus the chain checks in `append_review`. This is the same **vacuous verification** shape
 the project explicitly guards against (see the behavioural-feature/snapshot fixes): an invariant
 that reports success over a scope it does not actually cover.
@@ -401,7 +401,7 @@ together to avoid a transient mismatch).
 ### 8. Research, privacy, and governance implications
 
 None by itself — it is latent and no production path currently exploits it. Relevance is the same
-governance theme: AegisTrace's claim depends on invariants being enforced **by construction, not by
+governance theme: ClueLattice's claim depends on invariants being enforced **by construction, not by
 convention** (explicitly valued in #26). Hardening this keeps the audit-trail invariant genuinely
 structural, so it underpins the #40 fix rather than undermining it.
 

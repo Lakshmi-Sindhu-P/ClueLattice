@@ -1,6 +1,6 @@
-# AegisTrace Agent Instructions
+# ClueLattice Agent Instructions
 
-AegisTrace is an evidence-grounded, defensive AI-security research project.
+ClueLattice is an evidence-grounded, defensive AI-security research project.
 
 ## Persistent Memory Protocol
 

@@ -37,8 +37,8 @@
       ],
       "capture_count": 6,
       "recorded_inputs": [],
-      "reproducible": true,
-      "reproducibility_note": "Recorded digest is reproducible from a correct regeneration with identical inputs and arguments, provided the artifact is written byte-for-byte by the producing script (raw-bytes sha256).",
+      "reproducible": false,
+      "reproducibility_note": "Recorded digest cannot recur after the 2026-10-25 AegisTrace -> ClueLattice rename (tag: pre-cluelattice-rename): the recorded bytes embed the pre-rename policy_id string 'aegistrace-phase3-behavioral-rf-validation-frozen-v1', and a correct regeneration under the renamed tree writes 'cluelattice-phase3-behavioral-rf-validation-frozen-v1'. The artifact contains no uuid-shaped identifiers, so this string is the only rename-affected content. Regeneration is a costed owner decision; both pre- and post-rename bytes remain valid for verifying the artifact they describe.",
       "shape_note": "Analyst outcome replay over six sealed captures, with budgeted policy traces and pooled aggregates."
     },
     {
@@ -133,8 +133,8 @@
       ],
       "capture_count": 4,
       "recorded_inputs": [],
-      "reproducible": true,
-      "reproducibility_note": "Recorded digest is reproducible from a correct regeneration with identical inputs and arguments, provided the artifact is written byte-for-byte by the producing script (raw-bytes sha256).",
+      "reproducible": false,
+      "reproducibility_note": "Recorded digest cannot recur after the 2026-10-25 AegisTrace -> ClueLattice rename (tag: pre-cluelattice-rename): the recorded bytes embed the pre-rename policy_id string 'aegistrace-phase3-behavioral-rf-validation-frozen-v1', and a correct regeneration under the renamed tree writes 'cluelattice-phase3-behavioral-rf-validation-frozen-v1'. The artifact contains no uuid-shaped identifiers, so this string is the only rename-affected content. Regeneration is a costed owner decision; both pre- and post-rename bytes remain valid for verifying the artifact they describe.",
       "shape_note": "Sealed heldout battery over four exam captures with policy threshold search metadata."
     },
     {
@@ -234,8 +234,8 @@
       ],
       "capture_count": 6,
       "recorded_inputs": [],
-      "reproducible": true,
-      "reproducibility_note": "Recorded digest is reproducible from a correct regeneration with identical inputs and arguments, provided the artifact is written byte-for-byte by the producing script (raw-bytes sha256).",
+      "reproducible": false,
+      "reproducibility_note": "Recorded digest cannot recur after the 2026-10-25 AegisTrace -> ClueLattice rename (tag: pre-cluelattice-rename): the recorded bytes embed the pre-rename policy_id string 'aegistrace-phase3-behavioral-rf-validation-frozen-v1', and a correct regeneration under the renamed tree writes 'cluelattice-phase3-behavioral-rf-validation-frozen-v1'. The artifact contains no uuid-shaped identifiers, so this string is the only rename-affected content. Regeneration is a costed owner decision; both pre- and post-rename bytes remain valid for verifying the artifact they describe.",
       "shape_note": "Reviewer-policy simulation sweep over six captures, with headline routing metrics and sweep axes."
     },
     {
@@ -285,8 +285,8 @@
       ],
       "capture_count": 4,
       "recorded_inputs": [],
-      "reproducible": true,
-      "reproducibility_note": "Recorded digest is reproducible from a correct regeneration with identical inputs and arguments, provided the artifact is written byte-for-byte by the producing script (raw-bytes sha256).",
+      "reproducible": false,
+      "reproducibility_note": "Recorded digest cannot recur after the 2026-10-25 AegisTrace -> ClueLattice rename (tag: pre-cluelattice-rename): the recorded bytes embed the pre-rename policy_id string 'aegistrace-phase3-behavioral-rf-validation-frozen-v1', and a correct regeneration under the renamed tree writes 'cluelattice-phase3-behavioral-rf-validation-frozen-v1'. The artifact contains no uuid-shaped identifiers, so this string is the only rename-affected content. Regeneration is a costed owner decision; both pre- and post-rename bytes remain valid for verifying the artifact they describe.",
       "shape_note": "Unknown-workload evaluation over four captures with model, policy and threshold provenance."
     }
   ]

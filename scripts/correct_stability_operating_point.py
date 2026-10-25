@@ -28,7 +28,7 @@ except ModuleNotFoundError:
     )
     from run_phase3_model_stability_cached import _load_features
 
-from aegistrace.evaluation.model_family import disagreement_report
+from cluelattice.evaluation.model_family import disagreement_report
 
 ARTIFACT = Path("data/evaluation/phase3_model_stability/stability_summary.json")
 FEATURE_ROOT = Path("data/evaluation/phase3_model_stability")

@@ -425,7 +425,7 @@
       "seed": 42,
       "command": "uv run python scripts/run_phase3_heldout_battery.py --acknowledge-sealed-opening --created-at 2026-10-08T15:30:00Z",
       "configuration": {
-        "policy_id": "aegistrace-phase3-behavioral-rf-validation-frozen-v1",
+        "policy_id": "cluelattice-phase3-behavioral-rf-validation-frozen-v1",
         "policy_path": "configs/phase3_frozen_policy.json",
         "model": "random_forest",
         "threshold": 0.2,
@@ -483,7 +483,7 @@
       "seed": 42,
       "command": "uv run python scripts/report_phase3_unknown_workload.py --created-at 2026-10-08T13:00:00Z",
       "configuration": {
-        "policy_id": "aegistrace-phase3-behavioral-rf-validation-frozen-v1",
+        "policy_id": "cluelattice-phase3-behavioral-rf-validation-frozen-v1",
         "policy_path": "configs/phase3_frozen_policy.json",
         "model": "random_forest",
         "threshold": 0.2,

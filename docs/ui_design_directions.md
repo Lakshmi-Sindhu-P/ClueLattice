@@ -1,4 +1,4 @@
-# AegisTrace UI — Design Directions for Approval
+# ClueLattice UI — Design Directions for Approval
 
 **Status: PROPOSED — awaiting owner approval. No implementation may begin until one direction is chosen.**
 
@@ -9,7 +9,7 @@ never blocks it**. FastAPI is a new dependency; it is introduced only at impleme
 
 A generic cybersecurity dashboard: dark background, red/amber/green severity chips, a table of alerts,
 a world map with attack arcs, a big number that says "threats blocked". That vocabulary implies
-certainty and autonomous action, which is precisely what AegisTrace refuses to claim. It would
+certainty and autonomous action, which is precisely what ClueLattice refuses to claim. It would
 misrepresent the project.
 
 ## What it must embody

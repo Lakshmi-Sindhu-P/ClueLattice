@@ -2,7 +2,7 @@
 
 ## What We Built
 
-We turned the broad AegisTrace idea into a bounded research and engineering design. The repository now defines the question, non-goals, defensive boundary, source roles, architecture, canonical entities, evaluation plan, leakage controls, milestones, known limitations, and rules for honest portfolio claims.
+We turned the broad ClueLattice idea into a bounded research and engineering design. The repository now defines the question, non-goals, defensive boundary, source roles, architecture, canonical entities, evaluation plan, leakage controls, milestones, known limitations, and rules for honest portfolio claims.
 
 No application code or experimental result exists yet.
 
@@ -35,7 +35,7 @@ The LLM is evaluated separately from detection. It may improve categorization, c
 
 ## Interview Explanation
 
-> AegisTrace is a defensive research project testing whether an LLM can improve security triage without becoming the source of truth. I designed it as a provenance-first batch pipeline: source adapters create validated canonical events, transparent rules and an interpretable ML baseline create detections, related detections become findings with immutable evidence bundles, and only then does an LLM produce a structured advisory assessment for human review. The evaluation separates detector quality from LLM grounding and uses scenario-aware splits to avoid overstating results from correlated network data.
+> ClueLattice is a defensive research project testing whether an LLM can improve security triage without becoming the source of truth. I designed it as a provenance-first batch pipeline: source adapters create validated canonical events, transparent rules and an interpretable ML baseline create detections, related detections become findings with immutable evidence bundles, and only then does an LLM produce a structured advisory assessment for human review. The evaluation separates detector quality from LLM grounding and uses scenario-aware splits to avoid overstating results from correlated network data.
 
 ## Questions for Me
 

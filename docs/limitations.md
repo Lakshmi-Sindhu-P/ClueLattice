@@ -73,7 +73,7 @@ new evidence-backed requirement changes the scope.
 
 ## Claims Explicitly Not Supported
 
-AegisTrace does not currently support claims of autonomous incident response, production readiness, broad threat detection, zero hallucinations, analyst time savings, cloud scale, real-time processing, enterprise deployment, or security impact.
+ClueLattice does not currently support claims of autonomous incident response, production readiness, broad threat detection, zero hallucinations, analyst time savings, cloud scale, real-time processing, enterprise deployment, or security impact.
 
 ## Reproducibility Limitations
 
@@ -96,9 +96,11 @@ merely reported as a mismatch.
 
 Third, and independent of the two points above, **four committed manifest digests cannot be
 reproduced at all**, three because the artifacts they describe embedded a wall-clock timing value in
-their serialized bytes and one because its recorded inputs can never recur. The phase-3 producer
+their serialized bytes and one because its recorded inputs can never recur. A 2026-10-25 repository
+rename adds a fifth cause covering four more entries, described at the end of this section. The
+phase-3 producer
 scripts measured model fit time with `time.perf_counter()` (`fit_seconds` in
-`src/aegistrace/evaluation/model_family.py`) and wrote it into each model result as
+`src/cluelattice/evaluation/model_family.py`) and wrote it into each model result as
 `fit_runtime_seconds` and inside a `runtime` block. That value differs on every run, so the recorded
 `sha256` for `data/evaluation/phase3_model_family/benchmark_summary.json`,
 `data/evaluation/phase3_causal_representation/causal_summary.json`, and
@@ -115,10 +117,16 @@ reproducible only when it is not timing-affected and none of its recorded inputs
 `"reproducible": true` contradicts the recorded input digests, without loading the
 tens-to-hundreds-of-megabytes artifacts.
 
-Those four entries are marked `"reproducible": false` with an explanatory `reproducibility_note` in
-`docs/artifact_manifest.json`; the other five are marked `"reproducible": true`. The producing scripts
+Those four entries, together with the four whose recorded bytes embed the pre-rename `policy_id`
+string `aegistrace-phase3-behavioral-rf-validation-frozen-v1` — changed to
+`cluelattice-phase3-behavioral-rf-validation-frozen-v1` by the 2026-10-25 AegisTrace -> ClueLattice
+rename (tag `pre-cluelattice-rename`), which re-versioned every active id namespace so new and stored
+identifiers cannot collide — are marked `"reproducible": false` with an explanatory
+`reproducibility_note` in `docs/artifact_manifest.json`: eight of the nine entries are now flagged,
+and only `data/evaluation/phase3_causal_overlap/overlap_summary.json` (no timing dependence, no
+recorded inputs, no rename-affected content) remains `"reproducible": true`. The producing scripts
 no longer serialize fit timing (it is reported on stderr for the operator), so a future regeneration
-can be reproducible, but the already-recorded digests for these four file paths will still not
+can be reproducible, but the already-recorded digests for these eight file paths will still not
 verify until an owner-approved regeneration updates the manifest.
 
 Each limitation should be linked to an experiment or mitigation before any related public claim changes.

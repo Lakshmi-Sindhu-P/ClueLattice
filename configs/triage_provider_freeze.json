@@ -2,7 +2,7 @@
   "freeze_version": "1.0.0",
   "status": "BLOCKED_HUMAN",
   "frozen_at": "2026-10-08T20:15:00Z",
-  "decision_ref": "Lakshmi-Sindhu-P/AegisTrace#11",
+  "decision_ref": "Lakshmi-Sindhu-P/ClueLattice#11",
   "purpose": "Freeze the exact provider and model configuration for the independent A/B triage so the run is reproducible, bounded, and governance-reviewed before any data leaves the machine. This artifact records the configuration without executing it.",
   "frozen_detector_policy": {
     "path": "configs/phase3_frozen_policy.json",
@@ -51,7 +51,7 @@
     "audited_at": "2026-10-08T20:10:00Z",
     "audit_method": "built a real EvidenceBundle from the committed fixture and inspected the exact canonical snapshot a provider would receive",
     "snapshot_size_bytes_observed": 1685,
-    "permitted_payload": "the canonical label-free EvidenceBundle snapshot produced by aegistrace.triage.snapshot.input_snapshot, which is the only object an assessor may receive",
+    "permitted_payload": "the canonical label-free EvidenceBundle snapshot produced by cluelattice.triage.snapshot.input_snapshot, which is the only object an assessor may receive",
     "prohibited_payloads": [
       "ground-truth labels or label sources",
       "raw CTU-13 flow records or packet payloads",
@@ -65,7 +65,7 @@
       "IP addresses do reach the snapshot as evidence, which is inherent: host identity is the grouping key. CTU-13 is a public, published research dataset, so these addresses are already public."
     ],
     "residual_risk": "Egress of public research-dataset addresses to a third-party provider is a governance decision, not a technical one. The provider's retention and training-use terms must be recorded before the first call.",
-    "transport_status": "IMPLEMENTED - offline only. The provider boundary exists (src/aegistrace/triage/provider.py, src/aegistrace/triage/run.py) and MUST refuse any provider whose descriptor requires egress unless the freeze status above is an approved value; under the current BLOCKED_HUMAN status a remote provider is refused with PermissionError. No network-capable import exists in the boundary. Only recorded-replay and stub providers can run."
+    "transport_status": "IMPLEMENTED - offline only. The provider boundary exists (src/cluelattice/triage/provider.py, src/cluelattice/triage/run.py) and MUST refuse any provider whose descriptor requires egress unless the freeze status above is an approved value; under the current BLOCKED_HUMAN status a remote provider is refused with PermissionError. No network-capable import exists in the boundary. Only recorded-replay and stub providers can run."
   },
   "budget": {
     "basis": "bounds the experiment so a runaway loop cannot consume resources before a human reviews interim output",
@@ -84,7 +84,7 @@
   "unmet_conditions": [
     {
       "condition": "provider access",
-      "detail": "The repository has no LLM client and no credential path. pyproject.toml declares only pyarrow, pydantic, and scikit-learn; no HTTP or LLM client exists anywhere in src/; and src/aegistrace/config.py:68 states that only non-secret settings are supported. Adding a client and a credential path is a new dependency and secret-handling decision that requires owner approval.",
+      "detail": "The repository has no LLM client and no credential path. pyproject.toml declares only pyarrow, pydantic, and scikit-learn; no HTTP or LLM client exists anywhere in src/; and src/cluelattice/config.py:68 states that only non-secret settings are supported. Adding a client and a credential path is a new dependency and secret-handling decision that requires owner approval.",
       "status": "BLOCKED_HUMAN"
     },
     {

@@ -17,15 +17,15 @@ from uuid import uuid4
 
 import pytest
 
-from aegistrace.detection.evidence import (
+from cluelattice.detection.evidence import (
     EvidenceIndex,
     build_evidence_bundle,
     build_evidence_bundles,
 )
-from aegistrace.detection.findings import aggregate_findings
-from aegistrace.detection.ml import emit_ml_detections
-from aegistrace.schemas.detections import DetectionSeverity
-from aegistrace.schemas.events import (
+from cluelattice.detection.findings import aggregate_findings
+from cluelattice.detection.ml import emit_ml_detections
+from cluelattice.schemas.detections import DetectionSeverity
+from cluelattice.schemas.events import (
     Ctu13FlowDetails,
     EventProvenance,
     GroundTruthLabel,
@@ -34,7 +34,7 @@ from aegistrace.schemas.events import (
     SourceType,
     event_id_for,
 )
-from aegistrace.schemas.findings import Finding
+from cluelattice.schemas.findings import Finding
 
 BASE = datetime(2026, 10, 8, 12, 0, tzinfo=UTC)
 CREATED_AT = datetime(2026, 10, 8, 13, 0, tzinfo=UTC)

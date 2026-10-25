@@ -21,7 +21,7 @@ from uuid import UUID
 
 import pyarrow.parquet as pq
 
-from aegistrace.evaluation.model_family import (
+from cluelattice.evaluation.model_family import (
     FIXED_POLICY_THRESHOLD,
     OPERATING_ALERTS_PER_1000_CAP,
     OPERATING_PRECISION_FLOOR,
@@ -33,15 +33,15 @@ from aegistrace.evaluation.model_family import (
     scenario_metrics,
     select_operating_threshold,
 )
-from aegistrace.features.causal import (
+from cluelattice.features.causal import (
     CAUSAL_FEATURE_NAMES,
     CAUSAL_FEATURE_VERSION,
     CausalFeatureDataset,
     build_ctu13_causal_features,
     write_causal_feature_parquet,
 )
-from aegistrace.ingestion.ctu13 import ctu13_source_url, parse_ctu13_binetflow
-from aegistrace.schemas.events import GroundTruthLabel
+from cluelattice.ingestion.ctu13 import ctu13_source_url, parse_ctu13_binetflow
+from cluelattice.schemas.events import GroundTruthLabel
 
 SEED = 42
 FOCUSED_MODELS = ("random_forest", "hist_gradient_boosting", "svm")

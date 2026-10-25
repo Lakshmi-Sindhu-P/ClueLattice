@@ -3,14 +3,14 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "aegistrace"
+name = "cluelattice"
 version = "0.1.0"
 description = "Evidence-grounded AI security triage research platform"
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
 license = { file = "LICENSE" }
 authors = [
-  { name = "AegisTrace contributors" },
+  { name = "ClueLattice contributors" },
 ]
 classifiers = [
   "Development Status :: 2 - Pre-Alpha",
@@ -48,16 +48,16 @@ dev = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/aegistrace"]
+packages = ["src/cluelattice"]
 
 [tool.pytest.ini_options]
-addopts = "--strict-config --strict-markers --cov=aegistrace --cov-report=term-missing --cov-fail-under=90"
+addopts = "--strict-config --strict-markers --cov=cluelattice --cov-report=term-missing --cov-fail-under=90"
 testpaths = ["tests"]
 pythonpath = ["."]
 
 [tool.coverage.run]
 branch = true
-source = ["aegistrace"]
+source = ["cluelattice"]
 
 [tool.coverage.report]
 exclude_also = [

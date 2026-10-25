@@ -308,8 +308,16 @@ def test_manifest_entry_requires_reproducibility_note(tmp_path: Path) -> None:
     assert any("'reproducibility_note' field" in v for v in violations)
 
 
-def test_committed_manifest_marks_pre_fix_timing_entries_unreproducible() -> None:
-    """The three artifacts whose bytes embedded a wall-clock fit time are flagged."""
+def test_committed_manifest_marks_unreproducible_entries() -> None:
+    """Eight of nine entries are flagged: timing (issue #21), transitive inputs (issue #23),
+    and the four artifacts whose recorded bytes embed the pre-rename policy_id string.
+
+    The rename flips (2026-10-25 AegisTrace -> ClueLattice, tag: pre-cluelattice-rename) affect
+    only policy_id; a uuid-shaped-identifier scan of all five formerly-true artifacts found
+    none, so a correct regeneration differs by exactly that one string. Only
+    phase3_causal_overlap/overlap_summary.json contains no timing-affected, input-chained, or
+    rename-affected content and remains reproducible.
+    """
 
     manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
     entries = {entry["path"]: entry for entry in manifest["artifacts"]}
@@ -318,15 +326,30 @@ def test_committed_manifest_marks_pre_fix_timing_entries_unreproducible() -> Non
         "data/evaluation/phase3_causal_representation/causal_summary.json",
         "data/evaluation/phase3_model_stability/stability_summary.json",
     }
+    rename_affected = {
+        "data/evaluation/phase3_analyst_replay/replay_summary.json",
+        "data/evaluation/phase3_heldout/heldout_summary.json",
+        "data/evaluation/phase3_reviewer_simulation/simulation_summary.json",
+        "data/evaluation/phase3_unknown_workload/workload_summary.json",
+    }
 
     assert all(isinstance(entry["reproducible"], bool) for entry in entries.values())
     assert all(entry["reproducibility_note"].strip() for entry in entries.values())
-    # Issue #23 adds a fourth, non-timing entry flagged because its inputs cannot recur.
+    # Issue #23 adds a fourth, non-timing entry flagged because its inputs cannot recur; the
+    # rename adds four more whose bytes embed the pre-rename policy_id.
     assert {path for path, entry in entries.items() if not entry["reproducible"]} == (
-        timing_affected | {"data/evaluation/phase3_uncertainty/uncertainty_summary.json"}
+        timing_affected
+        | {"data/evaluation/phase3_uncertainty/uncertainty_summary.json"}
+        | rename_affected
     )
     for path in timing_affected:
         assert "time.perf_counter" in entries[path]["reproducibility_note"]
+    for path in rename_affected:
+        assert "pre-cluelattice-rename" in entries[path]["reproducibility_note"]
+    assert (
+        entries["data/evaluation/phase3_causal_overlap/overlap_summary.json"]["reproducible"]
+        is True
+    )
 
 
 UNCERTAINTY_PATH = "data/evaluation/phase3_uncertainty/uncertainty_summary.json"

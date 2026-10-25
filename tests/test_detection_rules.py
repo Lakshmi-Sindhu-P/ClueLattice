@@ -5,8 +5,8 @@ from __future__ import annotations
 from datetime import UTC, datetime
 from pathlib import Path
 
-from aegistrace.detection.rules import apply_ctu13_rules, rule_predictions, write_detection_json
-from aegistrace.ingestion.ctu13 import parse_ctu13_binetflow
+from cluelattice.detection.rules import apply_ctu13_rules, rule_predictions, write_detection_json
+from cluelattice.ingestion.ctu13 import parse_ctu13_binetflow
 
 FIXTURE_PATH = Path("data/fixtures/ctu13/scenario_11.binetflow")
 CREATED_AT = datetime(2026, 9, 21, 2, tzinfo=UTC)

@@ -4,8 +4,8 @@
 
 ## Question and boundary
 
-Issue [#3](https://github.com/Lakshmi-Sindhu-P/AegisTrace/issues/3) follows the accepted
-Issue [#2](https://github.com/Lakshmi-Sindhu-P/AegisTrace/issues/2) result. It asks why the
+Issue [#3](https://github.com/Lakshmi-Sindhu-P/ClueLattice/issues/3) follows the accepted
+Issue [#2](https://github.com/Lakshmi-Sindhu-P/ClueLattice/issues/2) result. It asks why the
 `1.2.0` representation changed Random Forest (RF) / Linear SVM (SVM) overlap mostly in
 CTU-Malware-Capture-Botnet-51 (Scenario 10), while many malicious residuals remained.
 

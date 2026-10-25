@@ -5,7 +5,7 @@ import logging
 import sys
 from io import StringIO
 
-from aegistrace.logging_config import JsonFormatter, configure_logging
+from cluelattice.logging_config import JsonFormatter, configure_logging
 
 
 def test_configured_logger_emits_json_and_redacts_sensitive_fields() -> None:
@@ -47,7 +47,7 @@ def test_json_formatter_includes_exception() -> None:
         raise ValueError("fixture failure")
     except ValueError:
         record = logging.LogRecord(
-            name="aegistrace.test",
+            name="cluelattice.test",
             level=logging.ERROR,
             pathname=__file__,
             lineno=1,

@@ -45,7 +45,7 @@ solve the representation gap by itself.
 
 ## What changed
 
-`src/aegistrace/features/behavioral.py` adds feature version `1.1.0` to the original 26 values:
+`src/cluelattice/features/behavioral.py` adds feature version `1.1.0` to the original 26 values:
 
 - prior source-host connection count in 60 seconds;
 - prior unique destinations and destination ports in 300 seconds;
@@ -54,7 +54,7 @@ solve the representation gap by itself.
 
 Each scenario is processed independently. Events are ordered by timestamp, aggregates use prior
 flows only, raw addresses are keys rather than numeric features, and no label, filename, scenario
-ID, or source label enters the model matrix. `src/aegistrace/evaluation/improvement.py` compares
+ID, or source label enters the model matrix. `src/cluelattice/evaluation/improvement.py` compares
 Logistic Regression and Random Forest with `class_weight=None` and `class_weight="balanced"`, a
 fixed threshold of 0.5, and a validation-only threshold grid from 0.05 to 0.95. The selected
 threshold maximizes validation F1; it is not a final-test choice.

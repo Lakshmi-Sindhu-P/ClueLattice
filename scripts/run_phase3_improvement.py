@@ -13,8 +13,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from aegistrace.evaluation.improvement import run_comparison
-from aegistrace.features.behavioral import (
+from cluelattice.evaluation.improvement import run_comparison
+from cluelattice.features.behavioral import (
     BEHAVIORAL_BASE_FEATURE_COUNT,
     BEHAVIORAL_FEATURE_NAMES,
     BEHAVIORAL_FEATURE_VERSION,
@@ -22,9 +22,9 @@ from aegistrace.features.behavioral import (
     build_ctu13_behavioral_features,
     write_behavioral_feature_parquet,
 )
-from aegistrace.features.network import FEATURE_NAMES
-from aegistrace.ingestion.ctu13 import parse_ctu13_binetflow
-from aegistrace.schemas.events import GroundTruthLabel
+from cluelattice.features.network import FEATURE_NAMES
+from cluelattice.ingestion.ctu13 import parse_ctu13_binetflow
+from cluelattice.schemas.events import GroundTruthLabel
 
 SEED = 42
 SEALED_SCENARIO_ID = "CTU-Malware-Capture-Botnet-48"

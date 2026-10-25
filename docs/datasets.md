@@ -106,9 +106,9 @@ single three-scenario experiment, not a claim of broad CTU-13 generalization.
 The adapter preserves the raw source label, Argus direction/state/TOS fields, source addresses
 (including non-IP MAC addresses), source line identity, scenario identity, and the timezone
 assumption (`Europe/Prague`, converted to UTC). Source labels are dataset ground truth annotations;
-they are not AegisTrace detections or incident dispositions.
+they are not ClueLattice detections or incident dispositions.
 
-The separate implementation lives in `src/aegistrace/ingestion/ctu13.py` and is intentionally not
+The separate implementation lives in `src/cluelattice/ingestion/ctu13.py` and is intentionally not
 a format branch inside the IoT-23 Zeek adapter. The Phase 3 split and model result are explicitly
 bounded to the three named scenarios; no broad generalization result is claimed.
 
@@ -165,7 +165,7 @@ Official references:
 - Run a pinned Cowrie container only on an isolated local Docker network.
 - Bind the test service to localhost on a non-privileged port; do not forward a router port or expose it publicly.
 - Use only controlled test sessions owned by the builder.
-- Do not enable Cowrie's experimental LLM backend; it is unrelated to AegisTrace triage and would confound provenance.
+- Do not enable Cowrie's experimental LLM backend; it is unrelated to ClueLattice triage and would confound provenance.
 - Treat captured usernames, passwords, IPs, commands, downloads, and session recordings as sensitive.
 - Do not commit raw Cowrie logs or downloaded files.
 

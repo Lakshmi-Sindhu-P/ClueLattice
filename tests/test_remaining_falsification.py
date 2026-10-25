@@ -29,11 +29,11 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from aegistrace.evaluation.analyst_replay import _ranking_order
-from aegistrace.evaluation.model_family import make_model, select_operating_threshold
-from aegistrace.evaluation.reviewer_simulation import RoutingPolicy, simulate_capture
-from aegistrace.ingestion.iot23 import _separator_from_header
-from aegistrace.schemas.manifests import DatasetManifest
+from cluelattice.evaluation.analyst_replay import _ranking_order
+from cluelattice.evaluation.model_family import make_model, select_operating_threshold
+from cluelattice.evaluation.reviewer_simulation import RoutingPolicy, simulate_capture
+from cluelattice.ingestion.iot23 import _separator_from_header
+from cluelattice.schemas.manifests import DatasetManifest
 
 # --------------------------------------------------------------------------------------
 # Guards reachable only by passing a value outside the declared type.
@@ -190,7 +190,7 @@ def test_the_metric_excludes_cli_entry_points() -> None:
     commit message.
     """
 
-    for module in ("src/aegistrace/ingestion/ctu13.py", "src/aegistrace/ingestion/iot23.py"):
+    for module in ("src/cluelattice/ingestion/ctu13.py", "src/cluelattice/ingestion/iot23.py"):
         with open(module, encoding="utf-8") as handle:
             source = handle.read()
         idx = source.index('if __name__ == "__main__":')

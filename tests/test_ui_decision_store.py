@@ -27,15 +27,15 @@ from uuid import UUID
 import pytest
 from fastapi.testclient import TestClient
 
-from aegistrace.schemas.review import (
+from cluelattice.schemas.review import (
     EscalationState,
     ReviewDecision,
     ReviewTier,
     review_id_for,
 )
-from aegistrace.schemas.triage import AssessorRole
-from aegistrace.storage.reviews import ReviewStore
-from aegistrace.ui.app import create_app
+from cluelattice.schemas.triage import AssessorRole
+from cluelattice.storage.reviews import ReviewStore
+from cluelattice.ui.app import create_app
 
 SPINE_ID = "11111111-1111-5111-8111-111111111111"
 

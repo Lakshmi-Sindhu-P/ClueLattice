@@ -4,7 +4,7 @@
 
 ## Question and boundary
 
-Issue [#2](https://github.com/Lakshmi-Sindhu-P/AegisTrace/issues/2) asked whether a richer,
+Issue [#2](https://github.com/Lakshmi-Sindhu-P/ClueLattice/issues/2) asked whether a richer,
 causal host/time representation reduces the malicious validation flows missed by the retained
 Random Forest (RF), HistGradientBoosting (HGB), and Linear SVM (SVM). The study uses the same
 complete-capture split and operating policy as the corrected `1.1.0` stability reference:
@@ -33,7 +33,7 @@ Feature version `1.2.0` composes all 32 values from `1.1.0` and adds 13 prior-on
 - log prior bytes/packets with observation indicators;
 - log time since the previous source-host flow with a first-flow indicator.
 
-The implementation is in `src/aegistrace/features/causal.py`. Source/destination addresses are
+The implementation is in `src/cluelattice/features/causal.py`. Source/destination addresses are
 aggregation keys only. Events are sorted by observed UTC time, aggregates are updated after the
 current vector is produced, mixed-scenario input is rejected, and a future-flow audit verifies that
 earlier vectors do not change. No label, filename, scenario identifier, or source label enters the

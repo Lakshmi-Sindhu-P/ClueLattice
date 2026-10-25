@@ -1,4 +1,4 @@
-# AegisTrace Project Charter
+# ClueLattice Project Charter
 
 **Status:** Phase 0 design baseline amended on 2026-09-22 after Phase 3 hardening. The amended
 multi-model investigation architecture is approved intent; no new capability is implemented by this
@@ -8,7 +8,7 @@ document.
 
 Security analysts often need to connect raw telemetry, detector outputs, and incomplete context before deciding whether an event deserves investigation. Rules are transparent but narrow; supervised models can miss unfamiliar behavior; anomaly models can surface unusual behavior but are hard to interpret; LLMs can summarize evidence but may invent confident security conclusions.
 
-AegisTrace will test a constrained alternative: run justified deterministic, supervised, anomaly, temporal, and reference-backed specialists; analyze disagreement before optional interpretable fusion; aggregate alerts into provenance-preserving findings; verify claim types; ask two isolated AI roles for structured, uncertainty-aware assessments; and require tiered human review. Every stage must preserve enough provenance to reconstruct why a recommendation was produced.
+ClueLattice will test a constrained alternative: run justified deterministic, supervised, anomaly, temporal, and reference-backed specialists; analyze disagreement before optional interpretable fusion; aggregate alerts into provenance-preserving findings; verify claim types; ask two isolated AI roles for structured, uncertainty-aware assessments; and require tiered human review. Every stage must preserve enough provenance to reconstruct why a recommendation was produced.
 
 The project is successful only if its claims are measurable and reproducible. A fluent AI explanation is not evidence of correct triage.
 
@@ -26,7 +26,7 @@ The project is successful only if its claims are measurable and reproducible. A 
 
 ## Non-Goals
 
-AegisTrace is not:
+ClueLattice is not:
 
 - an autonomous SOC or final decision-maker;
 - a production intrusion-detection or prevention system;

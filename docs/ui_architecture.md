@@ -1,11 +1,11 @@
-# AegisTrace UI — Investigation Bench Architecture
+# ClueLattice UI — Investigation Bench Architecture
 
 **Document status: APPROVED INTENT / DESIGN.**
 **Implementation status: PARTIAL — the shell, the five views and the review-append write path are
 implemented; the evidence read layer is still one JSON artifact and the comparison view has no real
 data. See "Implementation status" below.**
 
-This document records the approved architectural and interaction direction for the AegisTrace
+This document records the approved architectural and interaction direction for the ClueLattice
 local user interface. It names the navigation model, the major views, the component boundaries, and
 the data dependencies, grounding every statement in types and file paths that exist in the
 repository today. It is the design contract that implementation must satisfy. Everything a view
@@ -19,7 +19,7 @@ writes and renders it honestly, including the states where it has nothing to sho
 
 | Element | Status |
 |---|---|
-| `src/aegistrace/ui/` package (read layer + app), `scripts/run_local_ui.py` | **CURRENT / IMPLEMENTED** |
+| `src/cluelattice/ui/` package (read layer + app), `scripts/run_local_ui.py` | **CURRENT / IMPLEMENTED** |
 | The five views, the navigation and the loopback-only bind | **CURRENT / IMPLEMENTED** |
 | Static HTML/CSS, no JavaScript, no external asset | **CURRENT / IMPLEMENTED** |
 | Synthetic marking, artifact-unavailable state, "AI assessment not available" state | **CURRENT / IMPLEMENTED** |
@@ -54,7 +54,7 @@ must never overstate certainty.
 > integrated as the persistent evidence/provenance system and Two Witnesses (B) implemented as a
 > dedicated AI-assessment comparison view. The primary workflow should be investigator-centered:
 > findings → evidence inspection → AI-assessment comparison (when available) → review requirements →
-> human decision. Preserve the research-first, provenance-first identity of AegisTrace. Do not
+> human decision. Preserve the research-first, provenance-first identity of ClueLattice. Do not
 > represent synthetic assessments as real experimental results, and do not fabricate functionality,
 > confidence measures, or operational capabilities. Treat this as approval of the architectural and
 > interaction direction, not blanket approval to introduce new research claims or alter existing
@@ -79,7 +79,7 @@ dependency; it is introduced only at implementation time.
 | Constraint | Requirement | Repository origin / enforcement |
 |---|---|---|
 | Localhost-only | Binds `127.0.0.1`; no external requests, no telemetry, no CDN; all assets ship local. | Approved in `docs/ui_design_directions.md` "Shared commitments". |
-| Read-only over evidence | The UI never writes detection data, never re-ranks, never auto-acts. The single write path is appending a `HumanReview`, which is append-only. | Enforced by the `ReviewHistory` schema (`src/aegistrace/schemas/review.py`, `validate_chain_is_linear`, `validate_subjects_match`), by `SpineRecord.require_history_is_open` (`src/aegistrace/spine.py`), and by the append-only `ReviewStore` (`src/aegistrace/storage/reviews.py`), which has no mutation code path. |
+| Read-only over evidence | The UI never writes detection data, never re-ranks, never auto-acts. The single write path is appending a `HumanReview`, which is append-only. | Enforced by the `ReviewHistory` schema (`src/cluelattice/schemas/review.py`, `validate_chain_is_linear`, `validate_subjects_match`), by `SpineRecord.require_history_is_open` (`src/cluelattice/spine.py`), and by the append-only `ReviewStore` (`src/cluelattice/storage/reviews.py`), which has no mutation code path. |
 | Honest certainty | Nothing renders as more certain than it is. Abstention, missing context and limitations are displayed as content, never hidden in a tooltip. Uncertainty is shown as a band/interval, never a bare confidence percentage. Every score carries its model name because scores are not comparable across models. | `TriageCategory.INSUFFICIENT_EVIDENCE`, `EvidenceBundle.missing_context`/`limitations`, `TriageAssessment.confidence_statement` and `uncertainties`, `ScoreReference.model_name`. |
 | Accessible by default | WCAG 2.2 AA contrast floor; visible focus states; full keyboard operation; semantic HTML; no information conveyed by animation alone. | Approved in `docs/ui_design_directions.md` "Shared commitments". |
 | Colour never alone | Severity and disagreement always carry text and/or shape in addition to colour. | Approved in `docs/ui_design_directions.md` "Shared commitments". |
@@ -91,17 +91,17 @@ dependency; it is introduced only at implementation time.
 The only state-changing operation the UI performs is appending a `HumanReview` to a review history.
 That operation is **append-only** and is enforced at three levels:
 
-1. `ReviewHistory` (`src/aegistrace/schemas/review.py`) enforces a single linear chain: every review
+1. `ReviewHistory` (`src/cluelattice/schemas/review.py`) enforces a single linear chain: every review
    shares the subject's `subject_triage_id`; a later review must supersede the most recent review;
    duplicate identifiers are rejected. A correction is a *new* review that points back via
    `supersedes_review_id`; nothing is overwritten.
-2. `SpineRecord.require_history_is_open` (`src/aegistrace/spine.py`) guarantees a spine record
+2. `SpineRecord.require_history_is_open` (`src/cluelattice/spine.py`) guarantees a spine record
    always reaches a human with an **empty** review history awaiting review — it raises if a record
    carries any review. This is the schema-level guarantee that no autonomous component (including
    any UI the spine would not pass through) can write a review. Because a spine record's embedded
    history is therefore *always* empty, reviews are stored in the separate store below rather than
    written back into the spine artifact.
-3. `ReviewStore` (`src/aegistrace/storage/reviews.py`) is where a review actually goes. It issues
+3. `ReviewStore` (`src/cluelattice/storage/reviews.py`) is where a review actually goes. It issues
    only `CREATE`, `INSERT` and `SELECT`, so no mutation code path exists; `review_id` is the primary
    key, so a duplicate is refused by the database as well as by the schema; and every read
    reconstructs a `ReviewHistory`, so a hand-edited database fails loudly on read instead of
@@ -111,7 +111,7 @@ That operation is **append-only** and is enforced at three levels:
    CLI can still issue `UPDATE`/`DELETE`; that is **detected**, not prevented. Preventing it is what
    PostgreSQL with restricted roles would buy, and PostgreSQL stays deferred.
 
-The append itself is executed through `append_review` in `src/aegistrace/review/history.py`, which
+The append itself is executed through `append_review` in `src/cluelattice/review/history.py`, which
 re-validates the chain before producing the new `ReviewHistory`. The repository's central invariant —
 the spine never acts — means the UI appends a review on the human's behalf; the UI never decides a
 tier, never classifies, and never scores.
@@ -159,9 +159,9 @@ Section 5.
 - **Purpose.** The persistent evidence/provenance system (Direction A) inside the shell: each claim
   is a numbered exhibit; selecting an exhibit re-roots the spine onto its evidence.
 - **Reads.** `EvidenceBundle`, `EventSummary`, `DetectionEvidence`, `ScoreReference`, `EvidenceReference`,
-  `Claim`, `ClaimVerification`, and at the bottom of the chain `SecurityEvent` (`src/aegistrace/schemas/events.py`).
+  `Claim`, `ClaimVerification`, and at the bottom of the chain `SecurityEvent` (`src/cluelattice/schemas/events.py`).
 - **Displays.** Bundle ancestry down to raw source records; the SHA-256 `snapshot_digest` always
-  visible (`src/aegistrace/spine.py`); each score with its `ScoreReference.model_name`.
+  visible (`src/cluelattice/spine.py`); each score with its `ScoreReference.model_name`.
 - **Empty / abstention state.** A missing segment is a labelled slot ("not established"), never
   blank space. Uncertainty from `EvidenceBundle.missing_context` and `limitations` is rendered inline.
 
@@ -177,14 +177,14 @@ Section 5.
 - **Empty / abstention state.** No admissible pair + comparison → an explicit "AI assessment not
   available" card. Mutual abstention (`INSUFFICIENT_EVIDENCE`) renders as an "insufficient
   evidence" card. `TriageCategory.INSUFFICIENT_EVIDENCE` is a valid category, not a failure
-  (`src/aegistrace/schemas/triage.py`).
+  (`src/cluelattice/schemas/triage.py`).
 
 ### 4.4 Review requirements
 - **Purpose.** Show *who is qualified to decide* and why.
 - **Reads.** `TierAssignment`, `ReviewTier`, `MachineCheck`, `ReviewHistory`, `HumanReview`.
 - **Displays.** The tier string with `TierAssignment.reasons` (always present —
   `min_length=1`) and `machine_checks`. A tier is an assertion about reviewer qualification
-  (`ReviewTier` in `src/aegistrace/schemas/review.py`), never a severity.
+  (`ReviewTier` in `src/cluelattice/schemas/review.py`), never a severity.
 - **Empty / abstention state.** If no `TierAssignment` artifact exists, the view states that it is
   absent; it does **not** compute one.
 
@@ -204,15 +204,15 @@ The UI is a **thin, read-mostly renderer**. Its components fall into three class
 |---|---|---|---|
 | Pure rendering over computed artifacts | Findings tray, provenance spine, comparison pane, tier display, review history display | Reads already-computed records and renders them. Performs **no detection, no scoring, no tier classification**. | **No.** It may format/aggregate for display but never computes a finding, an assessment, a comparison, a tier, or a score. |
 | Display-only utilities | Uncertainty band/interval renderer, severity/disagreement glyph (always text+shape+colour), synthetic badge | Render existing fields honestly. | No. |
-| The single write path | Human-decision form → `append_review` | Takes a human's form input and appends a `HumanReview`. | **Yes — the only library call.** It invokes `append_review` (`src/aegistrace/review/history.py`); the `ReviewHistory` and `SpineRecord` schemas enforce append-only semantics and the open-history invariant. |
+| The single write path | Human-decision form → `append_review` | Takes a human's form input and appends a `HumanReview`. | **Yes — the only library call.** It invokes `append_review` (`src/cluelattice/review/history.py`); the `ReviewHistory` and `SpineRecord` schemas enforce append-only semantics and the open-history invariant. |
 
 The boundary rule, stated plainly: **the UI performs no detection, no scoring, and no tier
 classification of its own.** Those are library responsibilities performed upstream
-(and, in the case of tier assignment, by `classify_tier` at `src/aegistrace/review/tiers.py`, never
+(and, in the case of tier assignment, by `classify_tier` at `src/cluelattice/review/tiers.py`, never
 by the UI). The UI renders what exists and appends one thing humans write.
 
 The `synthetic` flag is read and rendered (Section 8), never recomputed: the flag is forced onto the
-record by the provider boundary (`src/aegistrace/triage/provider.py`) and propagated to the run and
+record by the provider boundary (`src/cluelattice/triage/provider.py`) and propagated to the run and
 the spine record.
 
 ---
@@ -226,13 +226,13 @@ UI reads one JSON artifact for evidence and only the human-review history has a 
 
 | View | Source of truth (schema type) | Module | Exists today? |
 |---|---|---|---|
-| Findings tray | `Finding`, `EvidenceBundle` | `src/aegistrace/schemas/findings.py` | Yes (schema). Produceable via aggregation found in the repo (findings aggregation implemented per `MEMORY.md`). |
-| Provenance spine | `EvidenceBundle`, `EventSummary`, `DetectionEvidence`, `ScoreReference`, `EvidenceReference`, `Claim`, `ClaimVerification`, `SecurityEvent` | `src/aegistrace/schemas/findings.py`, `src/aegistrace/schemas/events.py`, `src/aegistrace/detection/evidence.py`, `src/aegistrace/verification/claims.py` | Yes for the schemas and claim verification module. A durable event store is **not** implemented (see 7). |
-| AI comparison | `TriageAssessment`, `TriageComparison`, `AssessorRole`, `DisagreementReason`, `ProviderMetadata`, `RawResponseReference` | `src/aegistrace/schemas/triage.py`, `src/aegistrace/triage/agreement.py` (agreement engine), `src/aegistrace/spine.py` | Schemas/engine: Yes. Real non-synthetic assessment data: **not yet** (firewall — see 7). |
-| Review requirements | `TierAssignment`, `ReviewTier`, `MachineCheck` | `src/aegistrace/schemas/review.py`, `src/aegistrace/review/tiers.py` | Yes (schema + `classify_tier`). |
-| Human decision | `HumanReview`, `ReviewHistory` | `src/aegistrace/schemas/review.py`, `src/aegistrace/review/history.py`, `src/aegistrace/storage/reviews.py` | Yes — schema, append-only helper, **and** a durable append-only store (`ReviewStore`). |
-| Top-level page/run identity | `SpineRecord` (fields: `spine_id`, `snapshot_digest`, `triage_run`, `comparison`, `tier`, `review_history`, `synthetic`) | `src/aegistrace/spine.py` | Yes (schema + `run_spine`). |
-| Egress/boundary truth | `ProviderDescriptor`, `ProviderResponse.synthetic`, freeze artifact | `src/aegistrace/triage/provider.py`, `configs/triage_provider_freeze.json` | Yes. Freeze status is `BLOCKED_HUMAN` and assessor independence is `NOT ESTABLISHED`. |
+| Findings tray | `Finding`, `EvidenceBundle` | `src/cluelattice/schemas/findings.py` | Yes (schema). Produceable via aggregation found in the repo (findings aggregation implemented per `MEMORY.md`). |
+| Provenance spine | `EvidenceBundle`, `EventSummary`, `DetectionEvidence`, `ScoreReference`, `EvidenceReference`, `Claim`, `ClaimVerification`, `SecurityEvent` | `src/cluelattice/schemas/findings.py`, `src/cluelattice/schemas/events.py`, `src/cluelattice/detection/evidence.py`, `src/cluelattice/verification/claims.py` | Yes for the schemas and claim verification module. A durable event store is **not** implemented (see 7). |
+| AI comparison | `TriageAssessment`, `TriageComparison`, `AssessorRole`, `DisagreementReason`, `ProviderMetadata`, `RawResponseReference` | `src/cluelattice/schemas/triage.py`, `src/cluelattice/triage/agreement.py` (agreement engine), `src/cluelattice/spine.py` | Schemas/engine: Yes. Real non-synthetic assessment data: **not yet** (firewall — see 7). |
+| Review requirements | `TierAssignment`, `ReviewTier`, `MachineCheck` | `src/cluelattice/schemas/review.py`, `src/cluelattice/review/tiers.py` | Yes (schema + `classify_tier`). |
+| Human decision | `HumanReview`, `ReviewHistory` | `src/cluelattice/schemas/review.py`, `src/cluelattice/review/history.py`, `src/cluelattice/storage/reviews.py` | Yes — schema, append-only helper, **and** a durable append-only store (`ReviewStore`). |
+| Top-level page/run identity | `SpineRecord` (fields: `spine_id`, `snapshot_digest`, `triage_run`, `comparison`, `tier`, `review_history`, `synthetic`) | `src/cluelattice/spine.py` | Yes (schema + `run_spine`). |
+| Egress/boundary truth | `ProviderDescriptor`, `ProviderResponse.synthetic`, freeze artifact | `src/cluelattice/triage/provider.py`, `configs/triage_provider_freeze.json` | Yes. Freeze status is `BLOCKED_HUMAN` and assessor independence is `NOT ESTABLISHED`. |
 
 None of these dependencies is a network dependency. All reads are over local, already-computed
 records; binding is `127.0.0.1` only.
@@ -245,15 +245,15 @@ The UI would want the following, but they do not exist in the repository today. 
 them so implementation never fabricates them:
 
 1. **A durable evidence read layer.** The human-review history now has a durable store
-   (`src/aegistrace/storage/reviews.py`, append-only, DuckDB, optional `storage` extra), but there is
+   (`src/cluelattice/storage/reviews.py`, append-only, DuckDB, optional `storage` extra), but there is
    still no durable store for *evidence*: the UI reads a **JSON artifact the pipeline already wrote**,
-   via `src/aegistrace/ui/artifacts.py`. A store-backed evidence read layer remains
+   via `src/cluelattice/ui/artifacts.py`. A store-backed evidence read layer remains
    `PLANNED, NOT IMPLEMENTED`, and PostgreSQL stays deferred. The `ui/` package, the FastAPI
    dependency and the `storage/` package all exist as optional extras.
 2. **Real (non-synthetic) independent assessment data.** `configs/triage_provider_freeze.json` is
    `BLOCKED_HUMAN`; assessor independence is `NOT ESTABLISHED`; there is no LLM client or credential
    path, and no network-capable import exists in the provider boundary
-   (`src/aegistrace/triage/provider.py`). Only offline recorded-replay and stub providers can run
+   (`src/cluelattice/triage/provider.py`). Only offline recorded-replay and stub providers can run
    today, and those are synthetic by construction. The AI-comparison view can therefore only ever
    show synthetic assessments until the freeze is resolved by a human.
 3. **A raw-event store serving the provenance spine's bottom.** `SecurityEvent` is a real schema,
@@ -266,7 +266,7 @@ them so implementation never fabricates them:
    `ScoreReference.model_score`, `TriageComparison.agreement_score`), each always labelled with its
    model/scale; it must not invent a numeric confidence the schemas do not provide.
 5. **Ground-truth labels.** The snapshot deliberately excludes ground-truth labels
-   (`configs/triage_provider_freeze.json`, prohibited payloads; `src/aegistrace/schemas/events.py`
+   (`configs/triage_provider_freeze.json`, prohibited payloads; `src/cluelattice/schemas/events.py`
    keeps `GroundTruthLabel` off the bundle / snapshot path). The UI must treat them as unavailable
    evidence, never as a value it may display as an assessment basis.
 6. **Any UI code or dependency.** No HTML/CSS/JS, no FastAPI dependency, no `ui/`/`api`/`storage`
@@ -280,12 +280,12 @@ The code distinguishes synthetic from real through a validated `synthetic` flag.
 that flag, and must do so as a permanent, visible part of the assessment surface — never as a
 tooltip, never dismissible:
 
-- `ProviderResponse.synthetic` (`src/aegistrace/triage/provider.py`): the raw-response flag. The
+- `ProviderResponse.synthetic` (`src/cluelattice/triage/provider.py`): the raw-response flag. The
   provider boundary **forces** `synthetic=True` on any response from a non-`REMOTE` descriptor,
   so an offline stub or recorded-replay response can never claim `synthetic=False`.
-- `TriageRun.synthetic` (`src/aegistrace/triage/run.py`): a run is synthetic if either descriptor is
+- `TriageRun.synthetic` (`src/cluelattice/triage/run.py`): a run is synthetic if either descriptor is
   offline, even if it aborts before a response.
-- `SpineRecord.synthetic` (`src/aegistrace/spine.py`): propagated onto the spine record.
+- `SpineRecord.synthetic` (`src/cluelattice/spine.py`): propagated onto the spine record.
 
 Required UI treatment:
 - Wherever an assessment, a comparison, or a spine record whose `synthetic == True` is shown, a
@@ -315,7 +315,7 @@ and not a new governance rule.
 | Durable persistence layer (`storage/`) | **CURRENT / IMPLEMENTED** for human-review history (append-only DuckDB store, optional `storage` extra). A durable store for **evidence** remains **PLANNED, NOT IMPLEMENTED** — the UI reads a JSON file |
 | The review-append write path | **CURRENT / IMPLEMENTED** — `POST /decision` appends a `HumanReview` when a store path is configured, and returns an explicit "NOT recorded" page when it is not |
 | Underlying schemas the views read | **CURRENT / IMPLEMENTED** (per `MEMORY.md`) |
-| Provider boundary, egress refusal, `synthetic` enforcement | **CURRENT / IMPLEMENTED and VALIDATED** (per `MEMORY.md` and `src/aegistrace/triage/provider.py`) |
+| Provider boundary, egress refusal, `synthetic` enforcement | **CURRENT / IMPLEMENTED and VALIDATED** (per `MEMORY.md` and `src/cluelattice/triage/provider.py`) |
 | Real non-synthetic triage run | **BLOCKED_HUMAN** / **NOT ESTABLISHED** (freeze artifact), so **PLANNED, NOT IMPLEMENTED** |
 
 ---
@@ -325,7 +325,7 @@ and not a new governance rule.
 The following could not be established from the repository and are stated as such rather than
 guessed:
 - The exact durable data source a UI would read **evidence** from; the human-review store now exists
-  (`src/aegistrace/storage/reviews.py`), but no durable evidence store does, so how evidence records
+  (`src/cluelattice/storage/reviews.py`), but no durable evidence store does, so how evidence records
   become available to the UI beyond the one JSON artifact is still not determined.
 - A numeric confidence measure to band as uncertainty (the schemas carry text, not a numeric
   confidence); the band requirement applies to scores, not to an invented confidence number.

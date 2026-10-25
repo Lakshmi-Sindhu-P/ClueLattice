@@ -11,12 +11,12 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from aegistrace.evaluation.analyst_replay import (
+from cluelattice.evaluation.analyst_replay import (
     RoutingPolicy,
     retrieval_curve,
     true_positives_at_budget,
 )
-from aegistrace.evaluation.reviewer_simulation import (
+from cluelattice.evaluation.reviewer_simulation import (
     ReviewerOutcome,
     ReviewerPolicy,
     routing_order,

@@ -16,11 +16,11 @@ import json
 from datetime import UTC, datetime
 from pathlib import Path
 
-from aegistrace.detection.evidence import build_evidence_bundles
-from aegistrace.detection.findings import aggregate_findings
-from aegistrace.detection.ml import emit_ml_detections
-from aegistrace.ingestion.ctu13 import parse_ctu13_binetflow
-from aegistrace.triage.corpus import build_corpus, write_corpus
+from cluelattice.detection.evidence import build_evidence_bundles
+from cluelattice.detection.findings import aggregate_findings
+from cluelattice.detection.ml import emit_ml_detections
+from cluelattice.ingestion.ctu13 import parse_ctu13_binetflow
+from cluelattice.triage.corpus import build_corpus, write_corpus
 
 DEFAULT_FIXTURE = Path("data/fixtures/ctu13/scenario_11.binetflow")
 EVENT_SCORE = 0.95

@@ -16,9 +16,9 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from aegistrace.detection.rules import apply_ctu13_rules, rule_predictions
-from aegistrace.evaluation.metrics import compute_binary_metrics
-from aegistrace.evaluation.model_family import (
+from cluelattice.detection.rules import apply_ctu13_rules, rule_predictions
+from cluelattice.evaluation.metrics import compute_binary_metrics
+from cluelattice.evaluation.model_family import (
     FIXED_POLICY_THRESHOLD,
     MODEL_FAMILY_NAMES,
     MODEL_FAMILY_VERSION,
@@ -32,15 +32,15 @@ from aegistrace.evaluation.model_family import (
     scenario_metrics,
     select_validation_threshold,
 )
-from aegistrace.features.behavioral import (
+from cluelattice.features.behavioral import (
     BEHAVIORAL_FEATURE_NAMES,
     BEHAVIORAL_FEATURE_VERSION,
     BehavioralFeatureDataset,
     build_ctu13_behavioral_features,
     write_behavioral_feature_parquet,
 )
-from aegistrace.ingestion.ctu13 import parse_ctu13_binetflow
-from aegistrace.schemas.events import GroundTruthLabel, SecurityEvent
+from cluelattice.ingestion.ctu13 import parse_ctu13_binetflow
+from cluelattice.schemas.events import GroundTruthLabel, SecurityEvent
 
 SEED = 42
 SEALED_SCENARIO_ID = "CTU-Malware-Capture-Botnet-48"

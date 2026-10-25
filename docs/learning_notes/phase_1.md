@@ -35,10 +35,10 @@ Schema validation is part of ML reliability. Invalid ports, naive timestamps, un
 
 ## Code to Understand
 
-1. `src/aegistrace/schemas/events.py` — source identity, event details, timestamp normalization, and label invariants.
-2. `src/aegistrace/schemas/manifests.py` — dataset snapshot integrity and consistency rules.
-3. `src/aegistrace/config.py` — TOML loading and allowlisted environment overrides.
-4. `src/aegistrace/logging_config.py` — isolated JSON logger and recursive key redaction.
+1. `src/cluelattice/schemas/events.py` — source identity, event details, timestamp normalization, and label invariants.
+2. `src/cluelattice/schemas/manifests.py` — dataset snapshot integrity and consistency rules.
+3. `src/cluelattice/config.py` — TOML loading and allowlisted environment overrides.
+4. `src/cluelattice/logging_config.py` — isolated JSON logger and recursive key redaction.
 5. `tests/` — executable examples of accepted and rejected inputs.
 
 ## Interview Explanation

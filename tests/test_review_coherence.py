@@ -16,14 +16,14 @@ from uuid import uuid4
 import pytest
 from pydantic import ValidationError
 
-from aegistrace.schemas.review import (
+from cluelattice.schemas.review import (
     EscalationState,
     HumanReview,
     ReviewDecision,
     ReviewTier,
     review_id_for,
 )
-from aegistrace.schemas.triage import AssessorRole
+from cluelattice.schemas.triage import AssessorRole
 
 REVIEWED_AT = datetime(2026, 10, 8, 14, 0, tzinfo=UTC)
 SUBJECT_ID = uuid4()

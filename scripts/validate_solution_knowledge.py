@@ -9,7 +9,7 @@ from typing import Any
 
 from pydantic import ValidationError
 
-from aegistrace.schemas.agent_trace import SolutionKnowledge
+from cluelattice.schemas.agent_trace import SolutionKnowledge
 
 
 def main() -> int:

@@ -14,10 +14,10 @@ from uuid import uuid4
 import pytest
 from pydantic import BaseModel, ValidationError
 
-from aegistrace.detection.evidence import build_evidence_bundle
-from aegistrace.detection.findings import aggregate_findings
-from aegistrace.detection.ml import emit_ml_detections
-from aegistrace.schemas.events import (
+from cluelattice.detection.evidence import build_evidence_bundle
+from cluelattice.detection.findings import aggregate_findings
+from cluelattice.detection.ml import emit_ml_detections
+from cluelattice.schemas.events import (
     Ctu13FlowDetails,
     EventProvenance,
     SecurityEvent,
@@ -25,8 +25,8 @@ from aegistrace.schemas.events import (
     SourceType,
     event_id_for,
 )
-from aegistrace.schemas.findings import EvidenceBundle
-from aegistrace.schemas.triage import (
+from cluelattice.schemas.findings import EvidenceBundle
+from cluelattice.schemas.triage import (
     AssessorRole,
     DisagreementReason,
     FailedAssessment,
@@ -36,7 +36,7 @@ from aegistrace.schemas.triage import (
     TriageCategory,
     TriageComparison,
 )
-from aegistrace.triage import (
+from cluelattice.triage import (
     SNAPSHOT_FIELDS,
     build_assessment,
     compare_assessments,

@@ -1,10 +1,10 @@
-# AegisTrace
+# ClueLattice
 
 **Evidence-Grounded AI Security Triage**
 
 Licensed under the [MIT License](LICENSE).
 
-AegisTrace is a defensive AI-security research project investigating whether a provenance-first,
+ClueLattice is a defensive AI-security research project investigating whether a provenance-first,
 multi-model system can produce trustworthy investigation recommendations while remaining grounded in
 verifiable evidence and preserving human oversight.
 
@@ -21,7 +21,7 @@ uv run ruff check .
 uv run mypy
 ```
 
-The default non-secret configuration is in `configs/default.toml`. Documented overrides are `AEGISTRACE_ENV`, `AEGISTRACE_LOG_LEVEL`, and `AEGISTRACE_DATA_DIR`; see `.env.example`. AegisTrace does not automatically load `.env` files.
+The default non-secret configuration is in `configs/default.toml`. Documented overrides are `CLUELATTICE_ENV`, `CLUELATTICE_LOG_LEVEL`, and `CLUELATTICE_DATA_DIR`; see `.env.example`. ClueLattice does not automatically load `.env` files.
 
 After obtaining authorization and placing the labeled file under the ignored `data/raw/` tree, run:
 
@@ -47,7 +47,7 @@ uv run python scripts/ingest_ctu13.py \
 ```
 
 This command consumes only labeled bidirectional text flows. The adapter preserves CTU-13 source
-labels and scenario identity but does not turn them into AegisTrace detection or incident claims.
+labels and scenario identity but does not turn them into ClueLattice detection or incident claims.
 
 ## Research Question
 
@@ -130,7 +130,7 @@ once, after the final policy is frozen.
 
 ## Safety Boundary
 
-AegisTrace must remain defensive. Testing is limited to offline datasets, synthetic fixtures, localhost, isolated containers, controlled environments, or explicitly authorized defensive systems. It will not scan unowned systems, generate exploit payloads, automate credential attacks, or expose vulnerable services publicly.
+ClueLattice must remain defensive. Testing is limited to offline datasets, synthetic fixtures, localhost, isolated containers, controlled environments, or explicitly authorized defensive systems. It will not scan unowned systems, generate exploit payloads, automate credential attacks, or expose vulnerable services publicly.
 
 ## Portfolio Integrity
 

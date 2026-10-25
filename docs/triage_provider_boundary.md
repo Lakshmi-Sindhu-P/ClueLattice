@@ -8,11 +8,11 @@ sent anywhere.**
 The boundary is the two modules that stand between an evidence bundle and anything that could
 produce an assessment:
 
-- `src/aegistrace/triage/provider.py` — the provider contract (`ProviderKind`,
+- `src/cluelattice/triage/provider.py` — the provider contract (`ProviderKind`,
   `ProviderDescriptor`, `ProviderRequest`, `ProviderResponse`, the `TriageProvider` protocol) and
   the only two providers that exist: `RecordedTriageProvider` (deterministic replay of already
   captured text) and `StubTriageProvider` (mechanical text derived from the request alone).
-- `src/aegistrace/triage/run.py` — `run_independent_triage`, the orchestrator that refuses remote
+- `src/cluelattice/triage/run.py` — `run_independent_triage`, the orchestrator that refuses remote
   providers, builds the snapshot once per bundle, sends the identical snapshot to both roles,
   admits assessments through the existing `build_assessment`, compares them with the existing
   `compare_assessments`, and enforces the freeze budget.
@@ -22,10 +22,10 @@ It imports no HTTP, socket, or LLM client, and it adds no credential path.
 
 ## Why egress is blocked in code, not by convention
 
-The governing principle is that **AegisTrace must not send anything anywhere without human
+The governing principle is that **ClueLattice must not send anything anywhere without human
 interference**. A convention ("do not call the API yet") is a statement about the current
 intention of whoever is editing the repository; it does not survive a later refactor, a copied
-snippet, or an automated agent. AegisTrace therefore makes the current state executable:
+snippet, or an automated agent. ClueLattice therefore makes the current state executable:
 
 1. **No transport exists.** Neither new module imports `requests`, `httpx`, `aiohttp`, `urllib`,
    `http.client`, `socket`, `openai`, `anthropic`, or `litellm`. A regression test

@@ -1,1 +1,1 @@
-"""Reproducible AegisTrace command modules used by local validation."""
+"""Reproducible ClueLattice command modules used by local validation."""

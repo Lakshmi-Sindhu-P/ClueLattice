@@ -25,7 +25,7 @@ from uuid import UUID, uuid4
 import pytest
 from pydantic import ValidationError
 
-from aegistrace.schemas.triage import (
+from cluelattice.schemas.triage import (
     AssessorRole,
     TriageComparison,
     comparison_id_for,

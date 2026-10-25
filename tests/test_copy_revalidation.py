@@ -21,10 +21,10 @@ from uuid import uuid4
 import pytest
 from pydantic import ValidationError
 
-from aegistrace.ingestion.ctu13 import parse_ctu13_binetflow
-from aegistrace.review.history import append_review, current_review, new_history
-from aegistrace.schemas.events import event_id_for
-from aegistrace.schemas.review import (
+from cluelattice.ingestion.ctu13 import parse_ctu13_binetflow
+from cluelattice.review.history import append_review, current_review, new_history
+from cluelattice.schemas.events import event_id_for
+from cluelattice.schemas.review import (
     EscalationState,
     HumanReview,
     ReviewDecision,

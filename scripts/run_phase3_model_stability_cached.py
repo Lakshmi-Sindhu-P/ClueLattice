@@ -38,8 +38,8 @@ except ModuleNotFoundError:
         _unique_svm_analysis,
     )
 
-from aegistrace.evaluation.metrics import compute_binary_metrics
-from aegistrace.evaluation.model_family import (
+from cluelattice.evaluation.metrics import compute_binary_metrics
+from cluelattice.evaluation.model_family import (
     FIXED_POLICY_THRESHOLD,
     OPERATING_ALERTS_PER_1000_CAP,
     OPERATING_PRECISION_FLOOR,
@@ -52,8 +52,8 @@ from aegistrace.evaluation.model_family import (
     scenario_metrics,
     select_operating_threshold,
 )
-from aegistrace.features.behavioral import BEHAVIORAL_FEATURE_NAMES, BEHAVIORAL_FEATURE_VERSION
-from aegistrace.schemas.events import GroundTruthLabel
+from cluelattice.features.behavioral import BEHAVIORAL_FEATURE_NAMES, BEHAVIORAL_FEATURE_VERSION
+from cluelattice.schemas.events import GroundTruthLabel
 
 SEED = 42
 RAW_ROOT = Path("data/raw/ctu13")

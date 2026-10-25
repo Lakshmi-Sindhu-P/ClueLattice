@@ -88,7 +88,7 @@ reach more true positives than routing by model score. It lost on **every** capt
 captures it was worse than reviewing alerts at random.
 
 Artifact: `data/evaluation/phase3_analyst_replay/replay_summary.json`
-Code: `src/aegistrace/evaluation/analyst_replay.py`, `scripts/run_analyst_outcome_replay.py`
+Code: `src/cluelattice/evaluation/analyst_replay.py`, `scripts/run_analyst_outcome_replay.py`
 Frozen threshold `0.20`, no threshold search, model refit from the frozen policy on captures 52+47
 only. Uncertainty is operationalized as **ascending distance from the decision boundary**.
 
@@ -168,7 +168,7 @@ collected human data and must not be reported as one.
 rule at a time. Stage 2 replaces that with an explicit reviewer *policy* and sweeps it.
 
 Artifact: `data/evaluation/phase3_reviewer_simulation/simulation_summary.json`
-Code: `src/aegistrace/evaluation/reviewer_simulation.py`, `scripts/run_reviewer_simulation.py`
+Code: `src/cluelattice/evaluation/reviewer_simulation.py`, `scripts/run_reviewer_simulation.py`
 
 **The reviewer model — a policy, not a person.** A reviewer works alerts from a queue ordered by the
 routing policy, up to a shift budget `B`, and escalates an alert iff `score >= S`. Alerts past `B` are

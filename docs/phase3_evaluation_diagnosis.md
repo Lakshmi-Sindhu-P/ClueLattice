@@ -4,7 +4,7 @@
 frozen policy, or evaluation artifact was changed. This document interprets existing recorded
 artifacts; it does not produce a new detector result or a generalization claim.
 
-**Issue:** [Lakshmi-Sindhu-P/AegisTrace#8](https://github.com/Lakshmi-Sindhu-P/AegisTrace/issues/8)
+**Issue:** [Lakshmi-Sindhu-P/ClueLattice#8](https://github.com/Lakshmi-Sindhu-P/ClueLattice/issues/8)
 
 ## Summary
 

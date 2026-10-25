@@ -10,13 +10,13 @@ from pathlib import Path
 import pyarrow.parquet as pq
 import pytest
 
-from aegistrace.ingestion import iot23
-from aegistrace.ingestion.iot23 import (
+from cluelattice.ingestion import iot23
+from cluelattice.ingestion.iot23 import (
     IOT23_DATASET_NAME,
     parse_iot23_conn_log,
     write_ingestion_outputs,
 )
-from aegistrace.schemas.events import GroundTruthLabel, NetworkEventDetails
+from cluelattice.schemas.events import GroundTruthLabel, NetworkEventDetails
 
 FIXTURE_PATH = Path("data/fixtures/iot23/conn.log.labeled")
 INGESTED_AT = datetime(2026, 9, 20, 1, 0, tzinfo=UTC)

@@ -5,17 +5,17 @@ from __future__ import annotations
 from dataclasses import dataclass
 from uuid import UUID, uuid4
 
-from aegistrace.evaluation.baselines import evaluate_scenario_split
-from aegistrace.evaluation.hardening import alert_volume, calibration_summary
-from aegistrace.evaluation.improvement import (
+from cluelattice.evaluation.baselines import evaluate_scenario_split
+from cluelattice.evaluation.hardening import alert_volume, calibration_summary
+from cluelattice.evaluation.improvement import (
     error_summary,
     fit_scores,
     make_model,
     run_comparison,
     tune_threshold,
 )
-from aegistrace.evaluation.metrics import compute_binary_metrics
-from aegistrace.evaluation.model_family import (
+from cluelattice.evaluation.metrics import compute_binary_metrics
+from cluelattice.evaluation.model_family import (
     MODEL_FAMILY_NAMES,
     _normalize_anomaly_scores,
     alert_volume_for_scores,
@@ -27,8 +27,8 @@ from aegistrace.evaluation.model_family import (
     select_operating_threshold,
     select_validation_threshold,
 )
-from aegistrace.features.network import FEATURE_NAMES, FeatureDataset, FeatureRecord
-from aegistrace.schemas.events import GroundTruthLabel
+from cluelattice.features.network import FEATURE_NAMES, FeatureDataset, FeatureRecord
+from cluelattice.schemas.events import GroundTruthLabel
 
 
 @dataclass(frozen=True, slots=True)

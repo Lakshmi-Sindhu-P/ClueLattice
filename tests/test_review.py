@@ -12,17 +12,17 @@ from datetime import UTC, datetime, timedelta
 import pytest
 from pydantic import ValidationError
 
-from aegistrace.detection.evidence import build_evidence_bundle
-from aegistrace.detection.findings import aggregate_findings
-from aegistrace.detection.ml import emit_ml_detections
-from aegistrace.review import (
+from cluelattice.detection.evidence import build_evidence_bundle
+from cluelattice.detection.findings import aggregate_findings
+from cluelattice.detection.ml import emit_ml_detections
+from cluelattice.review import (
     append_review,
     classify_tier,
     current_review,
     machine_checks,
     new_history,
 )
-from aegistrace.schemas.events import (
+from cluelattice.schemas.events import (
     Ctu13FlowDetails,
     EventProvenance,
     SecurityEvent,
@@ -30,21 +30,21 @@ from aegistrace.schemas.events import (
     SourceType,
     event_id_for,
 )
-from aegistrace.schemas.findings import EvidenceBundle
-from aegistrace.schemas.review import (
+from cluelattice.schemas.findings import EvidenceBundle
+from cluelattice.schemas.review import (
     EscalationState,
     HumanReview,
     ReviewDecision,
     ReviewTier,
     review_id_for,
 )
-from aegistrace.schemas.triage import (
+from cluelattice.schemas.triage import (
     AssessorRole,
     ProviderMetadata,
     RawResponseReference,
     TriageAssessment,
 )
-from aegistrace.triage import build_assessment, compare_assessments
+from cluelattice.triage import build_assessment, compare_assessments
 
 BASE = datetime(2026, 10, 8, 12, 0, tzinfo=UTC)
 CREATED_AT = datetime(2026, 10, 8, 13, 0, tzinfo=UTC)

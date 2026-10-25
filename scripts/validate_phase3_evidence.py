@@ -10,7 +10,7 @@ from typing import Any
 
 from pydantic import ValidationError
 
-from aegistrace.schemas.experiments import SEALED_SCENARIO_ID, ExperimentRegistry
+from cluelattice.schemas.experiments import SEALED_SCENARIO_ID, ExperimentRegistry
 
 
 def _sha256(path: Path) -> str:

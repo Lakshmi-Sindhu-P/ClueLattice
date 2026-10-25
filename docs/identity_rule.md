@@ -1,6 +1,6 @@
-# The AegisTrace Identity Rule
+# The ClueLattice Identity Rule
 
-**Status: APPROVED (owner, 2026-10-09). Applies to every identifier AegisTrace derives from content.**
+**Status: APPROVED (owner, 2026-10-09). Applies to every identifier ClueLattice derives from content.**
 
 ## The rule
 
@@ -31,7 +31,7 @@ A field **does not belong** when it is any of these three:
 
 ### Why this rule exists
 
-AegisTrace's central claim is that a conclusion can be traced back to the evidence that supports it.
+ClueLattice's central claim is that a conclusion can be traced back to the evidence that supports it.
 That claim rests on identifiers. An identifier that does not depend on the thing it identifies looks
 like a content address but behaves as a **slot address** — a name for a *position*, not for a
 *thing*. Two distinct observations then share one name, and the trace stops being a trace.

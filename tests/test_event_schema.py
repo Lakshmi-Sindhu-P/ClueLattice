@@ -10,7 +10,7 @@ from uuid import uuid4
 import pytest
 from pydantic import ValidationError
 
-from aegistrace.schemas.events import (
+from cluelattice.schemas.events import (
     GroundTruthLabel,
     NetworkEventDetails,
     SecurityEvent,

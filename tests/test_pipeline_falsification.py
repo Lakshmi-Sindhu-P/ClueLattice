@@ -17,27 +17,27 @@ from uuid import uuid4
 
 import pytest
 
-from aegistrace.detection.evidence import build_evidence_bundle
-from aegistrace.detection.ml import emit_ml_detections
-from aegistrace.features.behavioral import (
+from cluelattice.detection.evidence import build_evidence_bundle
+from cluelattice.detection.ml import emit_ml_detections
+from cluelattice.features.behavioral import (
     BEHAVIORAL_FEATURE_NAMES,
     BehavioralFeatureDataset,
     BehavioralFeatureRecord,
 )
-from aegistrace.features.causal import (
+from cluelattice.features.causal import (
     CAUSAL_FEATURE_NAMES,
     CausalFeatureDataset,
     CausalFeatureRecord,
     build_ctu13_causal_features,
 )
-from aegistrace.features.network import FEATURE_NAMES, FeatureRecord, build_ctu13_features
-from aegistrace.ingestion.ctu13 import _event_to_row as ctu13_event_to_row
-from aegistrace.ingestion.ctu13 import _parse_timestamp, parse_ctu13_binetflow
-from aegistrace.ingestion.iot23 import _event_from_record as iot23_event_from_record
-from aegistrace.ingestion.iot23 import _event_to_row as iot23_event_to_row
-from aegistrace.schemas.detections import DetectionSeverity
-from aegistrace.schemas.events import event_id_for
-from aegistrace.schemas.findings import Finding
+from cluelattice.features.network import FEATURE_NAMES, FeatureRecord, build_ctu13_features
+from cluelattice.ingestion.ctu13 import _event_to_row as ctu13_event_to_row
+from cluelattice.ingestion.ctu13 import _parse_timestamp, parse_ctu13_binetflow
+from cluelattice.ingestion.iot23 import _event_from_record as iot23_event_from_record
+from cluelattice.ingestion.iot23 import _event_to_row as iot23_event_to_row
+from cluelattice.schemas.detections import DetectionSeverity
+from cluelattice.schemas.events import event_id_for
+from cluelattice.schemas.findings import Finding
 
 FIXTURE_PATH = "data/fixtures/ctu13/scenario_11.binetflow"
 BASE = datetime(2026, 10, 8, 12, 0, tzinfo=UTC)

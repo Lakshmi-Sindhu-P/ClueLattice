@@ -7,7 +7,7 @@ claim.
 
 ## Study Design
 
-AegisTrace is an incremental engineering case study with quantitative detector evaluation and a
+ClueLattice is an incremental engineering case study with quantitative detector evaluation and a
 future rubric-based LLM triage evaluation. Each layer is evaluated before it is combined with the
 next:
 

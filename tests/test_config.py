@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 from pydantic import ValidationError
 
-from aegistrace.config import load_settings
+from cluelattice.config import load_settings
 
 
 def test_load_default_settings() -> None:
@@ -20,9 +20,9 @@ def test_load_default_settings() -> None:
 def test_environment_overrides_are_explicit() -> None:
     settings = load_settings(
         environ={
-            "AEGISTRACE_ENV": "test",
-            "AEGISTRACE_LOG_LEVEL": "debug",
-            "AEGISTRACE_DATA_DIR": "tmp/test-data",
+            "CLUELATTICE_ENV": "test",
+            "CLUELATTICE_LOG_LEVEL": "debug",
+            "CLUELATTICE_DATA_DIR": "tmp/test-data",
         }
     )
 
@@ -41,7 +41,7 @@ def test_unknown_toml_key_is_rejected(tmp_path: Path) -> None:
 
 def test_invalid_environment_override_is_rejected() -> None:
     with pytest.raises(ValidationError, match="environment"):
-        load_settings(environ={"AEGISTRACE_ENV": "staging"})
+        load_settings(environ={"CLUELATTICE_ENV": "staging"})
 
 
 def test_missing_config_file_fails_clearly(tmp_path: Path) -> None:

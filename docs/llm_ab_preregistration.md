@@ -33,7 +33,7 @@ agreement_score = len(shared_evidence_ids)
 ```
 
 and it is defined as **0.0 when neither side cites anything**. It is produced by deterministic code
-(`aegistrace.triage.agreement.compare_assessments`), not by a model, so the same two assessment
+(`cluelattice.triage.agreement.compare_assessments`), not by a model, so the same two assessment
 records always yield the same score. The value is read from the stored comparison records; it is
 never recomputed with an alternative definition.
 
@@ -89,7 +89,7 @@ primary result**:
 
 ## Sample plan and stopping rule
 
-- **Corpus:** the deterministic, label-free corpus from `aegistrace.triage.corpus.build_corpus`.
+- **Corpus:** the deterministic, label-free corpus from `cluelattice.triage.corpus.build_corpus`.
   Entries are sorted and the digest is taken over canonical JSON, so the same bundles reproduce the
   same `corpus_digest` anywhere. The corpus carries no ground-truth label.
 - **Complete run:** 20 bundles, 40 assessments (2 roles × 20), 20 comparisons.

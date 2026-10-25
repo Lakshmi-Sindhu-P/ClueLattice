@@ -19,20 +19,20 @@ from pathlib import Path
 
 import pytest
 
-from aegistrace.detection.evidence import build_evidence_bundle
-from aegistrace.detection.findings import aggregate_findings
-from aegistrace.detection.ml import emit_ml_detections
-from aegistrace.ingestion.ctu13 import parse_ctu13_binetflow
-from aegistrace.schemas.findings import EvidenceBundle
-from aegistrace.schemas.triage import (
+from cluelattice.detection.evidence import build_evidence_bundle
+from cluelattice.detection.findings import aggregate_findings
+from cluelattice.detection.ml import emit_ml_detections
+from cluelattice.ingestion.ctu13 import parse_ctu13_binetflow
+from cluelattice.schemas.findings import EvidenceBundle
+from cluelattice.schemas.triage import (
     AssessorRole,
     ProviderMetadata,
     RawResponseReference,
     TriageAssessment,
     TriageComparison,
 )
-from aegistrace.triage.agreement import compare_assessments
-from aegistrace.triage.assessment import build_assessment
+from cluelattice.triage.agreement import compare_assessments
+from cluelattice.triage.assessment import build_assessment
 
 CREATED_AT = datetime(2026, 10, 9, 12, 0, tzinfo=UTC)
 FIXTURE = Path("data/fixtures/ctu13/scenario_11.binetflow")

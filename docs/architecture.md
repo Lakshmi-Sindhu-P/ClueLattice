@@ -1,4 +1,4 @@
-# AegisTrace Architecture
+# ClueLattice Architecture
 
 **Status:** Phase 1 contracts, Phase 2 ingestion, Phase 3A versioned features, Phase 3B deterministic rules, and Phase 3C baseline/improvement/hardening evaluation code are implemented and tested. The accepted three-scenario baseline remains historical; the current detector-improvement study uses two training and two validation scenarios while Scenario 7 remains sealed. A validation-frozen Random Forest policy exists for a future one-time final measurement. The multi-model, finding, verification, dual-review, reference-retrieval, and recommendation layers below are approved design, not implemented capability.
 
@@ -64,7 +64,7 @@
 
 ## Canonical Entities
 
-The Phase 1 event, provenance, and manifest contracts are immutable Pydantic models in `src/aegistrace/schemas/`; Phase 2 adds CTU-13-specific flow details and scenario identity. Phase 3 adds an immutable detection record for rules and versioned feature records. Milestone 5 adds the immutable `Finding`, `EvidenceBundle`, and `Claim` contracts in `src/aegistrace/schemas/findings.py`, with deterministic label-free aggregation in `src/aegistrace/detection/findings.py` and claim verification in `src/aegistrace/verification/`. Milestone 7 adds the immutable `TriageAssessment`, `FailedAssessment`, and `TriageComparison` contracts in `src/aegistrace/schemas/triage.py`, with assessor-input isolation and deterministic adjudication in `src/aegistrace/triage/`. Milestone 8 adds the immutable `HumanReview` and `ReviewHistory` contracts in `src/aegistrace/schemas/review.py`, with deterministic tier assignment and Tier A machine checks in `src/aegistrace/review/`. The triage run itself still awaits an owner provider decision.
+The Phase 1 event, provenance, and manifest contracts are immutable Pydantic models in `src/cluelattice/schemas/`; Phase 2 adds CTU-13-specific flow details and scenario identity. Phase 3 adds an immutable detection record for rules and versioned feature records. Milestone 5 adds the immutable `Finding`, `EvidenceBundle`, and `Claim` contracts in `src/cluelattice/schemas/findings.py`, with deterministic label-free aggregation in `src/cluelattice/detection/findings.py` and claim verification in `src/cluelattice/verification/`. Milestone 7 adds the immutable `TriageAssessment`, `FailedAssessment`, and `TriageComparison` contracts in `src/cluelattice/schemas/triage.py`, with assessor-input isolation and deterministic adjudication in `src/cluelattice/triage/`. Milestone 8 adds the immutable `HumanReview` and `ReviewHistory` contracts in `src/cluelattice/schemas/review.py`, with deterministic tier assignment and Tier A machine checks in `src/cluelattice/review/`. The triage run itself still awaits an owner provider decision.
 
 ### SourceRecordRef
 
@@ -98,29 +98,29 @@ MAC-address flows, and Argus semantics must remain visible after normalization.
 
 ### Phase 3 feature and detector boundaries
 
-`src/aegistrace/features/network.py` emits `FEATURE_VERSION=1.0.0` with a small numeric feature
+`src/cluelattice/features/network.py` emits `FEATURE_VERSION=1.0.0` with a small numeric feature
 vector. Event IDs, scenario IDs, source record IDs, and labels remain metadata and are never passed
 to model fitting. Missing numeric values become zero plus an explicit missing indicator; categorical
-values use fixed one-hot flags with an `other`/`missing` bucket. `src/aegistrace/detection/rules.py`
+values use fixed one-hot flags with an `other`/`missing` bucket. `src/cluelattice/detection/rules.py`
 contains three fixed predicates (`high_volume_flow`, `long_lived_high_volume_flow`, and
 `icmp_packet_burst`) that emit `DetectionResult` records with observed values and thresholds.
 
-`src/aegistrace/features/behavioral.py` composes a version `1.1.0` vector with prior, scenario-local
+`src/cluelattice/features/behavioral.py` composes a version `1.1.0` vector with prior, scenario-local
 host aggregates: connection rate, destination and port diversity, traffic asymmetry, and repeated
 short connections. It rejects mixed-scenario input and uses only flows observed before the current
-flow. `src/aegistrace/evaluation/improvement.py` performs validation-only class-weight and threshold
+flow. `src/cluelattice/evaluation/improvement.py` performs validation-only class-weight and threshold
 comparisons; its runner has no final-test argument. `scripts/run_phase3_hardening.py` performs
 feature-group ablations, a future-event causality audit, calibration assessment, and alert-volume
 analysis, then writes the frozen policy in `configs/phase3_frozen_policy.json`. Neither runner can
 load the sealed Scenario 7 identifier.
 
-`src/aegistrace/evaluation/baselines.py` fits Logistic Regression and Random Forest only on known
+`src/cluelattice/evaluation/baselines.py` fits Logistic Regression and Random Forest only on known
 benign/malicious rows from the train scenario. Validation and test scenarios remain separate, and
 unknown labels are excluded from supervised fitting and metrics.
 
 ### Amended multi-model detection design
 
-**Status: CURRENT / IMPLEMENTED for the model-family benchmark harness; APPROVED INTENT / DESIGN for the final detector composition.** The harness that trains and scores candidate families over scenario-aware splits is implemented in `src/aegistrace/evaluation/model_family.py` with the runner `scripts/run_phase3_model_family_benchmark.py`; no multi-model composition is deployed. The final detector is not assumed to be a
+**Status: CURRENT / IMPLEMENTED for the model-family benchmark harness; APPROVED INTENT / DESIGN for the final detector composition.** The harness that trains and scores candidate families over scenario-aware splits is implemented in `src/cluelattice/evaluation/model_family.py` with the runner `scripts/run_phase3_model_family_benchmark.py`; no multi-model composition is deployed. The final detector is not assumed to be a
 single universal malicious-versus-benign classifier. Candidate specialists run in parallel over the
 same provenance-preserving evidence, and their outputs remain separately inspectable. A model family
 is included only when it answers a clear question, survives scenario-aware validation, and exposes a
@@ -249,11 +249,11 @@ or rejected. Fusion and architecture choices are selected only on training/valid
 - Raw third-party data stays outside Git under ignored local storage.
 - Normalized immutable event partitions and feature tables use Parquet.
 - DuckDB provides local queries and relational views over Parquet. **Partially implemented:** DuckDB
-  currently backs only the human-review store (`src/aegistrace/storage/reviews.py`), not yet
+  currently backs only the human-review store (`src/cluelattice/storage/reviews.py`), not yet
   relational views over the Parquet artifacts, which are still read directly with PyArrow.
 - Small manifests, configs, prompts, and evaluation cases are versioned in Git when licensing and sensitivity permit.
 - Human review begins in DuckDB for a single local user, as approved.
-  `src/aegistrace/storage/reviews.py` implements that as an append-only store: it issues only
+  `src/cluelattice/storage/reviews.py` implements that as an append-only store: it issues only
   `CREATE`, `INSERT` and `SELECT`, so no mutation code path exists, and every read reconstructs a
   `ReviewHistory` so a hand-edited database fails loudly instead of presenting a forged lineage as
   authoritative. DuckDB does not make a table immutable — a user with the `duckdb` CLI can still
@@ -287,7 +287,7 @@ below state which parts are implemented and which are still planned, and `MEMORY
 authoritative repo-shape block.
 
 ```text
-src/aegistrace/
+src/cluelattice/
     ingestion/     # source adapter protocol and implementations
     schemas/       # canonical and source-detail models
     validation/    # quality checks and reports

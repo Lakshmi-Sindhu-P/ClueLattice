@@ -13,11 +13,11 @@ from typing import Literal
 import pytest
 from pydantic import BaseModel
 
-from aegistrace.detection.evidence import build_evidence_bundle
-from aegistrace.detection.findings import aggregate_findings
-from aegistrace.detection.ml import emit_ml_detections, severity_for_score
-from aegistrace.schemas.detections import DetectionResult, DetectionSeverity
-from aegistrace.schemas.events import (
+from cluelattice.detection.evidence import build_evidence_bundle
+from cluelattice.detection.findings import aggregate_findings
+from cluelattice.detection.ml import emit_ml_detections, severity_for_score
+from cluelattice.schemas.detections import DetectionResult, DetectionSeverity
+from cluelattice.schemas.events import (
     Ctu13FlowDetails,
     EventProvenance,
     GroundTruthLabel,
@@ -26,13 +26,13 @@ from aegistrace.schemas.events import (
     SourceType,
     event_id_for,
 )
-from aegistrace.schemas.findings import (
+from cluelattice.schemas.findings import (
     Claim,
     ClaimType,
     EvidenceReference,
     claim_id_for,
 )
-from aegistrace.verification import verify_claim
+from cluelattice.verification import verify_claim
 
 BASE = datetime(2026, 10, 8, 12, 0, tzinfo=UTC)
 CREATED_AT = datetime(2026, 10, 8, 13, 0, tzinfo=UTC)

@@ -15,12 +15,12 @@ from uuid import UUID
 import pytest
 from pydantic import ValidationError
 
-from aegistrace import spine as spine_module
-from aegistrace.detection.evidence import build_evidence_bundle
-from aegistrace.detection.findings import aggregate_findings
-from aegistrace.detection.ml import emit_ml_detections
-from aegistrace.review.history import append_review, current_review, new_history
-from aegistrace.schemas.events import (
+from cluelattice import spine as spine_module
+from cluelattice.detection.evidence import build_evidence_bundle
+from cluelattice.detection.findings import aggregate_findings
+from cluelattice.detection.ml import emit_ml_detections
+from cluelattice.review.history import append_review, current_review, new_history
+from cluelattice.schemas.events import (
     Ctu13FlowDetails,
     EventProvenance,
     SecurityEvent,
@@ -28,8 +28,8 @@ from aegistrace.schemas.events import (
     SourceType,
     event_id_for,
 )
-from aegistrace.schemas.findings import EvidenceBundle
-from aegistrace.schemas.review import (
+from cluelattice.schemas.findings import EvidenceBundle
+from cluelattice.schemas.review import (
     EscalationState,
     HumanReview,
     ReviewDecision,
@@ -38,15 +38,15 @@ from aegistrace.schemas.review import (
     TierAssignment,
     review_id_for,
 )
-from aegistrace.schemas.triage import AssessorRole
-from aegistrace.spine import run_spine
-from aegistrace.triage.provider import (
+from cluelattice.schemas.triage import AssessorRole
+from cluelattice.spine import run_spine
+from cluelattice.triage.provider import (
     ProviderDescriptor,
     ProviderKind,
     ProviderRequest,
     StubTriageProvider,
 )
-from aegistrace.triage.snapshot import snapshot_digest
+from cluelattice.triage.snapshot import snapshot_digest
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 FREEZE = json.loads(

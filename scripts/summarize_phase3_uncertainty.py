@@ -13,7 +13,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from aegistrace.evaluation.uncertainty import confusion_intervals
+from cluelattice.evaluation.uncertainty import confusion_intervals
 
 SEALED_SCENARIO_ID = "CTU-Malware-Capture-Botnet-48"
 

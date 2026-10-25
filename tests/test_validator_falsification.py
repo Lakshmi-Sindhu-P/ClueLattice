@@ -1,4 +1,4 @@
-"""Falsification suite for the pydantic model validators that guard AegisTrace records.
+"""Falsification suite for the pydantic model validators that guard ClueLattice records.
 
 A validator is a *claim* that some family of bad input is rejected.  A guard that is never observed
 rejecting anything is an untested claim, and this project has repeatedly shipped guards that
@@ -20,18 +20,18 @@ from uuid import uuid4
 import pytest
 from pydantic import ValidationError
 
-from aegistrace.schemas.agent_trace import (
+from cluelattice.schemas.agent_trace import (
     AgentTraceRecord,
     LessonVersion,
     SolutionEntry,
     SolutionKnowledge,
 )
-from aegistrace.schemas.detections import DetectionSeverity
-from aegistrace.schemas.events import SecurityEvent
-from aegistrace.schemas.experiments import ExperimentRegistry, ExperimentRun
-from aegistrace.schemas.findings import Finding
-from aegistrace.schemas.manifests import DatasetManifest
-from aegistrace.schemas.review import (
+from cluelattice.schemas.detections import DetectionSeverity
+from cluelattice.schemas.events import SecurityEvent
+from cluelattice.schemas.experiments import ExperimentRegistry, ExperimentRun
+from cluelattice.schemas.findings import Finding
+from cluelattice.schemas.manifests import DatasetManifest
+from cluelattice.schemas.review import (
     EscalationState,
     HumanReview,
     ReviewDecision,
@@ -39,17 +39,17 @@ from aegistrace.schemas.review import (
     ReviewTier,
     review_id_for,
 )
-from aegistrace.schemas.triage import (
+from cluelattice.schemas.triage import (
     AssessorRole,
     DisagreementReason,
     TriageComparison,
 )
-from aegistrace.triage.provider import (
+from cluelattice.triage.provider import (
     ProviderDescriptor,
     ProviderKind,
     ProviderResponse,
 )
-from aegistrace.triage.run import RunBudget, TriageRun
+from cluelattice.triage.run import RunBudget, TriageRun
 from test_agent_trace import _source
 from test_event_schema import fixture_payload
 from test_experiment_registry import _run

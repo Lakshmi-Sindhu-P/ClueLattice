@@ -4,7 +4,7 @@ This file governs portfolio and resume claims. Update it only from repository ev
 
 ## IMPLEMENTED
 
-- Defined and documented the AegisTrace research problem, scope, non-goals, defensive boundary, architecture, source strategy, evaluation protocol, risks, and phased milestone plan.
+- Defined and documented the ClueLattice research problem, scope, non-goals, defensive boundary, architecture, source strategy, evaluation protocol, risks, and phased milestone plan.
 - Established a repository-level persistent memory and claim-governance protocol in `AGENTS.md` and `MEMORY.md`.
 - Pre-registered leakage controls, detector/LLM evaluation categories, and evidence-grounding requirements before implementation or experimentation.
 - Built a Python 3.12 package foundation with a locked `uv` environment, strict Pydantic event/provenance and dataset-manifest contracts, deterministic UUIDv5 event identity, typed TOML configuration, redacting JSON logs, and documentation-safe fixtures.

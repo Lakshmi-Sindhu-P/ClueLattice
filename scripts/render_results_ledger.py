@@ -17,7 +17,7 @@ LEDGER = "docs/results_ledger.json"
 OUTPUT = "docs/results.md"
 
 FRAMING = (
-    "This ledger states what the AegisTrace project claims, at what evidence tier, and backed "
+    "This ledger states what the ClueLattice project claims, at what evidence tier, and backed "
     "by which registered experiment artifact; every number is extracted from an artifact on "
     "disk. It is generated from `docs/results_ledger.json` by "
     "`scripts/render_results_ledger.py` and is validated against `docs/experiment_registry.json` "
@@ -29,7 +29,7 @@ FRAMING = (
 def render(ledger: dict[str, Any]) -> str:
     """Return the full Markdown document for ``ledger``."""
 
-    lines: list[str] = ["# AegisTrace results ledger", "", FRAMING, ""]
+    lines: list[str] = ["# ClueLattice results ledger", "", FRAMING, ""]
 
     lines.extend(
         [

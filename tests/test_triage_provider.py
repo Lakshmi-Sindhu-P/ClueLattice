@@ -17,10 +17,10 @@ from uuid import uuid4
 import pytest
 from pydantic import ValidationError
 
-from aegistrace.detection.evidence import build_evidence_bundle
-from aegistrace.detection.findings import aggregate_findings
-from aegistrace.detection.ml import emit_ml_detections
-from aegistrace.schemas.events import (
+from cluelattice.detection.evidence import build_evidence_bundle
+from cluelattice.detection.findings import aggregate_findings
+from cluelattice.detection.ml import emit_ml_detections
+from cluelattice.schemas.events import (
     Ctu13FlowDetails,
     EventProvenance,
     SecurityEvent,
@@ -28,9 +28,9 @@ from aegistrace.schemas.events import (
     SourceType,
     event_id_for,
 )
-from aegistrace.schemas.findings import EvidenceBundle
-from aegistrace.schemas.triage import AssessorRole, FailedAssessment, TriageAssessment
-from aegistrace.triage.provider import (
+from cluelattice.schemas.findings import EvidenceBundle
+from cluelattice.schemas.triage import AssessorRole, FailedAssessment, TriageAssessment
+from cluelattice.triage.provider import (
     ProviderDescriptor,
     ProviderKind,
     ProviderRequest,
@@ -40,14 +40,14 @@ from aegistrace.triage.provider import (
     digest_text,
     request_digest,
 )
-from aegistrace.triage.run import (
+from cluelattice.triage.run import (
     APPROVED_EGRESS_FREEZE_STATUSES,
     RunBudget,
     TriageRun,
     assert_provider_permitted,
     run_independent_triage,
 )
-from aegistrace.triage.snapshot import snapshot_digest
+from cluelattice.triage.snapshot import snapshot_digest
 
 BASE = datetime(2026, 10, 8, 12, 0, tzinfo=UTC)
 CREATED_AT = datetime(2026, 10, 8, 13, 0, tzinfo=UTC)
@@ -651,7 +651,7 @@ def test_boundary_modules_cannot_open_a_network_connection() -> None:
         r"(requests|httpx|aiohttp|urllib|http\.client|socket|openai|anthropic|litellm)\b"
     )
     for name in ("provider.py", "run.py"):
-        source = (REPO_ROOT / "src" / "aegistrace" / "triage" / name).read_text(encoding="utf-8")
+        source = (REPO_ROOT / "src" / "cluelattice" / "triage" / name).read_text(encoding="utf-8")
         offenders = [line for line in source.splitlines() if forbidden.match(line)]
         assert offenders == [], f"{name} imports a network module: {offenders}"
 

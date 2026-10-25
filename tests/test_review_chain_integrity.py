@@ -19,8 +19,8 @@ from uuid import uuid4
 
 import pytest
 
-from aegistrace.review.history import append_review, new_history
-from aegistrace.schemas.review import (
+from cluelattice.review.history import append_review, new_history
+from cluelattice.schemas.review import (
     EscalationState,
     HumanReview,
     ReviewDecision,
@@ -28,7 +28,7 @@ from aegistrace.schemas.review import (
     ReviewTier,
     review_id_for,
 )
-from aegistrace.schemas.triage import AssessorRole
+from cluelattice.schemas.triage import AssessorRole
 
 SUBJECT = uuid4()
 REVIEWED_AT = datetime(2026, 10, 9, 12, 0, tzinfo=UTC)

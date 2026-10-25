@@ -281,7 +281,7 @@ def test_render_output_is_written_verbatim(tmp_path: Path) -> None:
 
     assert out.read_bytes() == rendered.encode("utf-8")
     # The falsifier: an empty or constant render would satisfy the encoding check above.
-    assert rendered.startswith("# AegisTrace results ledger")
+    assert rendered.startswith("# ClueLattice results ledger")
     assert len(rendered) > 200
 
 

@@ -1,4 +1,4 @@
-"""Validate one redacted AegisTrace agent JSONL provenance file."""
+"""Validate one redacted ClueLattice agent JSONL provenance file."""
 
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ from typing import Any
 
 from pydantic import ValidationError
 
-from aegistrace.schemas.agent_trace import AgentTraceRecord
+from cluelattice.schemas.agent_trace import AgentTraceRecord
 
 
 def _build_parser() -> argparse.ArgumentParser:

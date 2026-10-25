@@ -89,7 +89,7 @@ Three thinner areas remain, and they align with the corrected detector diagnosis
 [phase3_evaluation_diagnosis.md](phase3_evaluation_diagnosis.md):
 
 1. **Evaluation under label scarcity.** Published detection work reports metrics on labelled subsets.
-   The AegisTrace artifacts show the labelled subset was 5.7% of validation rows and 67.8% malicious,
+   The ClueLattice artifacts show the labelled subset was 5.7% of validation rows and 67.8% malicious,
    while 94.3% of rows carried no label. Honest reporting of that unlabelled majority — and of the
    unknown-label alert workload as a first-class result rather than a footnote — is not well served.
 2. **Independence between assessors as the experimental variable.** This is the sharpest finding of

@@ -1,4 +1,4 @@
-"""Serve the local AegisTrace UI on the loopback interface only.
+"""Serve the local ClueLattice UI on the loopback interface only.
 
 The UI is an investigation instrument for one analyst on one machine. It is not a service. This
 entry point therefore binds ``127.0.0.1`` and **refuses to bind anything else** - there is no flag
@@ -107,7 +107,7 @@ def main() -> int:
         )
         return 2
 
-    from aegistrace.ui.app import create_app
+    from cluelattice.ui.app import create_app
 
     app = create_app(artifact_path=artifact, store_path=store)
     print(f"run_local_ui: serving http://{LOOPBACK}:{args.port}/ (loopback only)")

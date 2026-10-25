@@ -12,13 +12,13 @@ nothing about who is in the room. If the guest changes, the address does not.
 A passport number is a **content address** — it is derived from facts about a specific person. Two
 different people cannot share one, and the same person keeps theirs.
 
-AegisTrace had built slot addresses and was calling them identities. Every id was derived from
+ClueLattice had built slot addresses and was calling them identities. Every id was derived from
 *where a thing sat in a stream* — the row number, the call order — rather than from *what the thing
 was*. That works perfectly until two different things occupy the same slot.
 
 ## Why that is dangerous in an evidence system, not just untidy
 
-AegisTrace's whole claim is that a conclusion can be traced back to the evidence it rests on. If two
+ClueLattice's whole claim is that a conclusion can be traced back to the evidence it rests on. If two
 different pieces of evidence can share an identifier, then a citation pointing at that identifier no
 longer points at one thing. The traceability claim quietly stops being true while every test still
 passes — because the tests were checking that ids *exist*, not that they *distinguish*.
@@ -113,7 +113,7 @@ A/B runs rather than after.
 
 ## Interview-level summary
 
-> AegisTrace derived identifiers from a record's position in a stream rather than its content, so
+> ClueLattice derived identifiers from a record's position in a stream rather than its content, so
 > three different entity types could each mint one id for two genuinely different things — which
 > undermines the project's central traceability claim while all tests pass. I generalised the three
 > reports into one rule: an identifier is a content address over exactly the defining fields, and

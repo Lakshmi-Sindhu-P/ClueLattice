@@ -17,23 +17,23 @@ from typing import Any
 import pyarrow.parquet as pq
 from sklearn.calibration import CalibratedClassifierCV
 
-from aegistrace.detection.rules import (
+from cluelattice.detection.rules import (
     CTU13_RULE_VERSION,
     HIGH_VOLUME_BYTES,
     ICMP_BURST_PACKETS,
     LONG_LIVED_BYTES,
     LONG_LIVED_SECONDS,
 )
-from aegistrace.evaluation.hardening import (
+from cluelattice.evaluation.hardening import (
     BEHAVIORAL_FEATURE_GROUPS,
     alert_volume,
     calibration_summary,
 )
-from aegistrace.evaluation.improvement import make_model
-from aegistrace.evaluation.metrics import compute_binary_metrics
-from aegistrace.features.behavioral import audit_prior_window_causality
-from aegistrace.ingestion.ctu13 import parse_ctu13_binetflow
-from aegistrace.schemas.events import GroundTruthLabel
+from cluelattice.evaluation.improvement import make_model
+from cluelattice.evaluation.metrics import compute_binary_metrics
+from cluelattice.features.behavioral import audit_prior_window_causality
+from cluelattice.ingestion.ctu13 import parse_ctu13_binetflow
+from cluelattice.schemas.events import GroundTruthLabel
 
 SEALED_SCENARIO_ID = "CTU-Malware-Capture-Botnet-48"
 DEFAULT_THRESHOLD = 0.20
@@ -282,7 +282,7 @@ def main() -> int:
         for threshold in THRESHOLDS
     ]
     frozen_policy = {
-        "policy_id": "aegistrace-phase3-behavioral-rf-validation-frozen-v1",
+        "policy_id": "cluelattice-phase3-behavioral-rf-validation-frozen-v1",
         "status": "FROZEN_VALIDATION_POLICY",
         "scope": "validation-selected policy; do not tune after reopening sealed Scenario 7",
         "model": "random_forest",

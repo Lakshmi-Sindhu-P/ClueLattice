@@ -1,4 +1,4 @@
-"""Tests for the read-only UI artifact access layer (``aegistrace.ui.artifacts``).
+"""Tests for the read-only UI artifact access layer (``cluelattice.ui.artifacts``).
 
 These tests exist to prove the two honesty rules the module's docstring encodes:
 
@@ -19,7 +19,7 @@ from pathlib import Path
 
 import pytest
 
-from aegistrace.ui.artifacts import (
+from cluelattice.ui.artifacts import (
     DEFAULT_SPINE_ARTIFACT,
     ArtifactUnavailableError,
     SpineRecordView,

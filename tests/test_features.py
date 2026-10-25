@@ -12,25 +12,25 @@ from typing import Any
 import pyarrow as pa
 import pyarrow.parquet as pq
 
-from aegistrace.features.behavioral import (
+from cluelattice.features.behavioral import (
     BEHAVIORAL_FEATURE_NAMES,
     audit_prior_window_causality,
     build_ctu13_behavioral_features,
 )
-from aegistrace.features.causal import (
+from cluelattice.features.causal import (
     CAUSAL_FEATURE_NAMES,
     audit_causal_prior_window,
     build_ctu13_causal_features,
     write_causal_feature_parquet,
 )
-from aegistrace.features.network import (
+from cluelattice.features.network import (
     FEATURE_NAMES,
     FeatureDataset,
     build_ctu13_features,
     write_feature_parquet,
 )
-from aegistrace.ingestion.ctu13 import parse_ctu13_binetflow
-from aegistrace.schemas.events import event_id_for
+from cluelattice.ingestion.ctu13 import parse_ctu13_binetflow
+from cluelattice.schemas.events import event_id_for
 
 FIXTURE_PATH = Path("data/fixtures/ctu13/scenario_11.binetflow")
 
@@ -163,7 +163,7 @@ def test_behavioral_aggregates_use_prior_host_window_and_write_parquet(tmp_path:
     assert dataset.records[0].values[-6:] == (0.0, 0.0, 0.0, 0.5, 0.0, 0.0)
     assert dataset.records[1].values[-6:] == (1.0, 1.0, 1.0, 0.5, 0.0, 1.0)
     output = tmp_path / "behavioral.parquet"
-    from aegistrace.features.behavioral import write_behavioral_feature_parquet
+    from cluelattice.features.behavioral import write_behavioral_feature_parquet
 
     write_behavioral_feature_parquet(dataset, output)
     assert pq.read_table(output).num_rows == 2
@@ -331,10 +331,15 @@ _ISSUE_22_BUILDERS: tuple[tuple[str, Any], ...] = (
 #     three previous digests reproduce EXACTLY (48435f1e4ad4 / 7411b8bf8cb3 / 7c8a256bc0af);
 #   * the id-free value multisets are byte-identical between v1 and v2.
 # So only the identifiers changed; no feature value did.
+#
+# Re-pinned 2026-10-25 for the AegisTrace -> ClueLattice rename: the owner re-versioned the uuid5
+# base (tag: pre-cluelattice-rename), so the ``(event_id, values)`` pairs moved again. A/B-verified
+# against the tagged code: the id-free digests (af735095cca4 / 795767672ef2 / 8f75890ae2fb) are
+# identical before and after the rename - again only the identifiers moved, no feature value.
 _ISSUE_22_EXPECTED_VALUE_DIGESTS = {
-    "network": "8a46d175c407",
-    "behavioral": "eda6a708b920",
-    "causal": "8343e2991cad",
+    "network": "015a039fdc84",
+    "behavioral": "38c239c31c89",
+    "causal": "6da8b5931599",
 }
 
 
@@ -372,7 +377,7 @@ def _value_map_digest(dataset: Any) -> str:
 
 
 def test_issue_22_input_order_yields_byte_identical_serialized_output(tmp_path: Path) -> None:
-    from aegistrace.features.behavioral import write_behavioral_feature_parquet
+    from cluelattice.features.behavioral import write_behavioral_feature_parquet
 
     events, reversed_events, shuffled_events = _issue_22_orders()
     writers = {

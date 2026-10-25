@@ -10,7 +10,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from aegistrace.evaluation.analyst_replay import (
+from cluelattice.evaluation.analyst_replay import (
     BudgetSpec,
     RoutingPolicy,
     alerts_to_reach_recall,

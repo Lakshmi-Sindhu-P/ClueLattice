@@ -4,13 +4,13 @@
 
 Phase 3 adds three deliberately small layers:
 
-1. `src/aegistrace/features/network.py` builds a versioned numeric feature vector from CTU-13
+1. `src/cluelattice/features/network.py` builds a versioned numeric feature vector from CTU-13
    flow fields. It keeps event/scenario/source IDs as metadata and excludes labels and label-like
    fields from the model matrix.
-2. `src/aegistrace/detection/rules.py` applies three fixed, evidence-traceable rules: high total
+2. `src/cluelattice/detection/rules.py` applies three fixed, evidence-traceable rules: high total
    volume, long-lived high-volume flows, and large ICMP packet bursts. Each result records the
    observed value and threshold. A rule signal is not an incident or proof of compromise.
-3. `src/aegistrace/evaluation/baselines.py` fits Logistic Regression and Random Forest with fixed
+3. `src/cluelattice/evaluation/baselines.py` fits Logistic Regression and Random Forest with fixed
    parameters and seed 42. Scenario 11 is training, Scenario 5 is validation, and Scenario 7 is
    the held-out test scenario. `Background` and `To-*` rows stay unknown and are excluded from
    supervised fitting and metrics.
@@ -153,9 +153,9 @@ row-level split.
 
 ## What the results prove—and do not prove
 
-The run proves that AegisTrace can build a reproducible, leakage-reviewed feature artifact, emit
+The run proves that ClueLattice can build a reproducible, leakage-reviewed feature artifact, emit
 evidence-linked deterministic detections, and evaluate two simple supervised baselines across
-scenario boundaries. It does not prove that AegisTrace detects compromise, that CTU-13 represents
+scenario boundaries. It does not prove that ClueLattice detects compromise, that CTU-13 represents
 modern networks, or that either model is suitable for operations. The held-out recall was low, so
 the first baseline should be treated as a useful negative result and a foundation for later,
 explicitly versioned improvements.

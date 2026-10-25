@@ -23,7 +23,7 @@ event and scenario IDs remain metadata for traceability and grouped evaluation.
 | `state_length`, `state_missing` | `State` | character count; binary indicator | Missing state becomes 0 plus indicator. Avoids a high-cardinality state vocabulary in the first baseline. | Low; state is source telemetry, not ground truth. |
 
 The resulting 26-column vector is ordered and versioned in
-`src/aegistrace/features/network.py`. Feature Parquet includes event/scenario/source IDs and
+`src/cluelattice/features/network.py`. Feature Parquet includes event/scenario/source IDs and
 ground-truth labels for audit, but `FeatureDataset.matrix()` returns only numeric columns to model
 callers. Unknown labels are not relabeled as benign.
 
@@ -31,7 +31,7 @@ callers. Unknown labels are not relabeled as benign.
 
 **Status:** implemented and validated in the Phase 3 validation-only improvement experiment.
 
-`src/aegistrace/features/behavioral.py` composes the 26 per-flow values with six
+`src/cluelattice/features/behavioral.py` composes the 26 per-flow values with six
 scenario-local behavioral values. It is called once per scenario; source hosts are keyed only for
 aggregation and their addresses never enter the model matrix. Events are sorted by observed time,
 and every aggregate uses prior flows only. Unknown-label rows therefore provide unlabeled context
@@ -84,5 +84,5 @@ unlabeled context but never enter supervised fitting or metrics.
 
 Raw addresses are aggregation keys only and are never columns in the model matrix. Scenario IDs,
 filenames, source labels, and ground-truth labels are metadata only. The implementation and causal
-window audit are in `src/aegistrace/features/causal.py`; the validation artifact is the ignored
+window audit are in `src/cluelattice/features/causal.py`; the validation artifact is the ignored
 `data/evaluation/phase3_causal_representation/causal_summary.json`.

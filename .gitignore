@@ -37,6 +37,6 @@ artifacts/
 
 # Local agent execution provenance (redacted, machine-readable, never committed)
 .context/
-.aegistrace-local/
+.cluelattice-local/
 *.trace.jsonl
 *.agent-run.jsonl

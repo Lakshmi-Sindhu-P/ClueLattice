@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "preregistration_id": "aegistrace-llm-ab-triage-prereg-1.0.0",
+  "preregistration_id": "cluelattice-llm-ab-triage-prereg-1.0.0",
   "frozen_at": "2026-10-09T00:00:00Z",
   "status": "FROZEN_PRE_DATA",
   "purpose": "Fix the analysis protocol for the independently frozen LLM A/B triage before any model output exists. This artifact records the decision rule, the single primary metric, the refutation condition, and the observed pre-data state. It does not execute anything.",
@@ -23,8 +23,8 @@
       "one_side_insufficient_evidence",
       "failed_assessment"
     ],
-    "comparison_contract": "aegistrace.schemas.triage.TriageComparison (agreement, agreement_score, escalation_recommended, shared_evidence_ids, left_only_evidence_ids, right_only_evidence_ids)",
-    "agreement_engine": "aegistrace.triage.agreement.compare_assessments",
+    "comparison_contract": "cluelattice.schemas.triage.TriageComparison (agreement, agreement_score, escalation_recommended, shared_evidence_ids, left_only_evidence_ids, right_only_evidence_ids)",
+    "agreement_engine": "cluelattice.triage.agreement.compare_assessments",
     "agreement_score_definition": "The Jaccard overlap of the two assessments' cited evidence ids: len(shared) / len(union), where shared is the intersection of cited_evidence_ids and union is their union. It is defined as 0.0 when neither side cites anything. The engine that computes this is deterministic code (no model call), so the same two records always yield the same score."
   },
   "hypothesis": {
@@ -85,7 +85,7 @@
     }
   ],
   "sample_plan": {
-    "corpus": "The deterministic label-free corpus built by aegistrace.triage.corpus.build_corpus over the frozen evidence bundles. build_corpus sorts its input and hashes canonical JSON into corpus_digest, so the same bundles yield the same corpus on any machine. The corpus carries no ground-truth label.",
+    "corpus": "The deterministic label-free corpus built by cluelattice.triage.corpus.build_corpus over the frozen evidence bundles. build_corpus sorts its input and hashes canonical JSON into corpus_digest, so the same bundles yield the same corpus on any machine. The corpus carries no ground-truth label.",
     "bundles_per_complete_run": 20,
     "assessments_per_complete_run": 40,
     "comparisons_per_complete_run": 20,

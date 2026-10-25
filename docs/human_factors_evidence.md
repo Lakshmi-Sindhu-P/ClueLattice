@@ -9,7 +9,7 @@ Everything marked `VERIFIED` below was re-fetched and re-read during review rath
 search summary. One transcription error was caught this way and is recorded rather than quietly
 fixed.
 
-**No claim in this note is about AegisTrace's own detector.** These are published results about other
+**No claim in this note is about ClueLattice's own detector.** These are published results about other
 systems, other populations, and other tasks.
 
 ## Evidence status vocabulary
@@ -62,7 +62,7 @@ literature review of 257 documents. Decisions were correct in **83%** of cases, 
 the explanations reflected the actual root cause.
 
 **Bounds:** decision quality versus decision *justification* (#5). This is the most directly relevant
-source for AegisTrace's own claim-verification design: it is published evidence that a correct
+source for ClueLattice's own claim-verification design: it is published evidence that a correct
 decision and a correct stated reason are different things, and that the second is much rarer.
 
 **Limitation:** small `n`, single SOC, preprint accepted to DIMVA'26.
@@ -101,16 +101,16 @@ These establish that the problems are real and studied. None yields a parameter.
    only SOC-specific numbers come from source 3, which is unreliable on its own face. The rigorous
    study (last item above) is not SOC triage. Any over-reliance parameter is a **free assumption**.
 
-## How this constrains AegisTrace's program
+## How this constrains ClueLattice's program
 
 - The reviewer simulation's shift budgets and strictness values remain **invented**, and the
   simulation must keep saying so. Source 1 bounds per-alert *time*, not alerts per shift.
 - Source 1 supports a sensitivity analysis over false-alarm rate, which the sweep already varies via
   strictness. It does **not** justify any particular strictness as realistic.
-- Source 2 is the strongest external motivation for AegisTrace's own separation of a *decision* from
+- Source 2 is the strongest external motivation for ClueLattice's own separation of a *decision* from
   its *stated justification* — the exact distinction the `Claim` / `ClaimVerification` contracts
   encode.
-- Because gaps 1 and 2 are unfilled, no AegisTrace result may claim to model real reviewer load or
+- Because gaps 1 and 2 are unfilled, no ClueLattice result may claim to model real reviewer load or
   real over-reliance. This is a boundary on the research contribution, not a defect to be papered
   over.
 

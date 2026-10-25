@@ -17,10 +17,10 @@ import hashlib
 import json
 from datetime import UTC, datetime, timedelta
 
-from aegistrace.detection.evidence import build_evidence_bundle
-from aegistrace.detection.findings import aggregate_findings
-from aegistrace.detection.ml import emit_ml_detections
-from aegistrace.schemas.events import (
+from cluelattice.detection.evidence import build_evidence_bundle
+from cluelattice.detection.findings import aggregate_findings
+from cluelattice.detection.ml import emit_ml_detections
+from cluelattice.schemas.events import (
     Ctu13FlowDetails,
     EventProvenance,
     SecurityEvent,
@@ -28,8 +28,8 @@ from aegistrace.schemas.events import (
     SourceType,
     event_id_for,
 )
-from aegistrace.schemas.findings import EvidenceBundle
-from aegistrace.triage import (
+from cluelattice.schemas.findings import EvidenceBundle
+from cluelattice.triage import (
     SNAPSHOT_FIELDS,
     canonical_snapshot_json,
     input_snapshot,
@@ -121,7 +121,7 @@ def test_snapshot_keys_are_exactly_the_evidence_bundle_fields() -> None:
     assert not unexpected, (
         f"the snapshot carries {unexpected}, which are not on the assessor allowlist. If a new "
         "EvidenceBundle field is intentionally allowed to reach a provider, add it to "
-        "SNAPSHOT_FIELDS in src/aegistrace/triage/snapshot.py; otherwise do not put it on "
+        "SNAPSHOT_FIELDS in src/cluelattice/triage/snapshot.py; otherwise do not put it on "
         "the bundle."
     )
     assert set(snapshot) == set(SNAPSHOT_FIELDS)

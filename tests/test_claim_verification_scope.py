@@ -20,8 +20,8 @@ from __future__ import annotations
 from datetime import UTC, datetime
 from uuid import uuid4
 
-from aegistrace.schemas.findings import Claim, ClaimType, EvidenceReference
-from aegistrace.verification import verify_claim
+from cluelattice.schemas.findings import Claim, ClaimType, EvidenceReference
+from cluelattice.verification import verify_claim
 
 CREATED_AT = datetime(2026, 10, 9, 12, 0, tzinfo=UTC)
 

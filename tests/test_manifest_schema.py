@@ -8,7 +8,7 @@ from uuid import uuid4
 import pytest
 from pydantic import ValidationError
 
-from aegistrace.schemas.manifests import DatasetManifest, ManifestFile
+from cluelattice.schemas.manifests import DatasetManifest, ManifestFile
 
 
 def valid_manifest_payload() -> dict[str, object]:
@@ -16,7 +16,7 @@ def valid_manifest_payload() -> dict[str, object]:
         "manifest_id": str(uuid4()),
         "dataset_name": "synthetic-contract-fixtures",
         "dataset_version": "1.0.0",
-        "source_url_or_generator": "aegistrace.tests.fixture_generator",
+        "source_url_or_generator": "cluelattice.tests.fixture_generator",
         "selected_scenarios": ["network-event-contract"],
         "acquired_or_generated_at": datetime(2026, 9, 20, 12, 0, tzinfo=UTC),
         "license_or_terms_note": "Project-authored synthetic fixture.",

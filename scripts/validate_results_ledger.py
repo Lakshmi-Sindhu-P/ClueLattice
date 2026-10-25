@@ -34,7 +34,7 @@ from typing import Any
 
 from pydantic import ValidationError
 
-from aegistrace.verification.evidence_assertions import parse_assertions, validate_evidence
+from cluelattice.verification.evidence_assertions import parse_assertions, validate_evidence
 
 CLAIM_TYPES = frozenset(
     {

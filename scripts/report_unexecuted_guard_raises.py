@@ -1,4 +1,4 @@
-"""Report ``raise`` statements in ``src/aegistrace`` that the test suite never executes.
+"""Report ``raise`` statements in ``src/cluelattice`` that the test suite never executes.
 
 Coverage tells you a function ran; it never says the rejection path ran. This script walks
 every ``raise`` in the package and reports the ones the suite never executed, so a guard
@@ -31,7 +31,7 @@ from pathlib import Path
 from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-SRC_ROOT = REPO_ROOT / "src" / "aegistrace"
+SRC_ROOT = REPO_ROOT / "src" / "cluelattice"
 DEFAULT_BASELINE = REPO_ROOT / "configs" / "guard_falsification_baseline.json"
 DEFAULT_COVERAGE = Path("/tmp/cov.json")
 
@@ -123,7 +123,7 @@ def _run_coverage(coverage_path: Path) -> None:
         "-m",
         "pytest",
         "-q",
-        "--cov=aegistrace",
+        "--cov=cluelattice",
         f"--cov-report=json:{coverage_path}",
     ]
     subprocess.run(cmd, cwd=REPO_ROOT, check=True)

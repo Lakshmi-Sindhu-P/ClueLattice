@@ -1,4 +1,4 @@
-"""Falsification suite for AegisTrace decision guards.
+"""Falsification suite for ClueLattice decision guards.
 
 Every guard is executed against the input it exists to refuse, because a guard never observed
 failing is an untested claim. A passing guard here has actually rejected its own worst case; where a
@@ -16,14 +16,14 @@ from uuid import uuid4
 import pytest
 from pydantic import ValidationError
 
-from aegistrace.detection.evidence import build_evidence_bundle
-from aegistrace.detection.findings import aggregate_findings
-from aegistrace.detection.ml import emit_ml_detections
-from aegistrace.features.behavioral import audit_prior_window_causality
-from aegistrace.features.causal import audit_causal_prior_window
-from aegistrace.review.history import append_review, new_history
-from aegistrace.review.tiers import classify_tier, machine_checks
-from aegistrace.schemas.events import (
+from cluelattice.detection.evidence import build_evidence_bundle
+from cluelattice.detection.findings import aggregate_findings
+from cluelattice.detection.ml import emit_ml_detections
+from cluelattice.features.behavioral import audit_prior_window_causality
+from cluelattice.features.causal import audit_causal_prior_window
+from cluelattice.review.history import append_review, new_history
+from cluelattice.review.tiers import classify_tier, machine_checks
+from cluelattice.schemas.events import (
     Ctu13FlowDetails,
     EventProvenance,
     SecurityEvent,
@@ -31,39 +31,39 @@ from aegistrace.schemas.events import (
     SourceType,
     event_id_for,
 )
-from aegistrace.schemas.findings import (
+from cluelattice.schemas.findings import (
     Claim,
     ClaimType,
     EvidenceBundle,
     EvidenceReference,
 )
-from aegistrace.schemas.review import (
+from cluelattice.schemas.review import (
     EscalationState,
     HumanReview,
     ReviewDecision,
     ReviewTier,
     review_id_for,
 )
-from aegistrace.schemas.triage import (
+from cluelattice.schemas.triage import (
     AssessorRole,
     DisagreementReason,
     FailedAssessment,
     ProviderMetadata,
     RawResponseReference,
 )
-from aegistrace.spine import SpineRecord, run_spine
-from aegistrace.triage import build_assessment, compare_assessments
-from aegistrace.triage.provider import (
+from cluelattice.spine import SpineRecord, run_spine
+from cluelattice.triage import build_assessment, compare_assessments
+from cluelattice.triage.provider import (
     ProviderDescriptor,
     ProviderKind,
     StubTriageProvider,
 )
-from aegistrace.triage.run import (
+from cluelattice.triage.run import (
     _independence_determination,
     assert_assessors_independent,
     assert_provider_permitted,
 )
-from aegistrace.verification.claims import verify_claim
+from cluelattice.verification.claims import verify_claim
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 FREEZE = json.loads(

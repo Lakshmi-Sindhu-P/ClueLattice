@@ -1,6 +1,6 @@
-# AegisTrace results ledger
+# ClueLattice results ledger
 
-This ledger states what the AegisTrace project claims, at what evidence tier, and backed by which registered experiment artifact; every number is extracted from an artifact on disk. It is generated from `docs/results_ledger.json` by `scripts/render_results_ledger.py` and is validated against `docs/experiment_registry.json` by `scripts/validate_results_ledger.py`, so a claim cannot drift from its citation without the validator failing.
+This ledger states what the ClueLattice project claims, at what evidence tier, and backed by which registered experiment artifact; every number is extracted from an artifact on disk. It is generated from `docs/results_ledger.json` by `scripts/render_results_ledger.py` and is validated against `docs/experiment_registry.json` by `scripts/validate_results_ledger.py`, so a claim cannot drift from its citation without the validator failing.
 
 ## Claim index
 
@@ -138,7 +138,7 @@ This ledger states what the AegisTrace project claims, at what evidence tier, an
 - simulation_disclaimer: 'This is a simulated reviewer under stated assumptions. It is not observed human behaviour and is not evidence about analyst decision quality, over-reliance, trust calibration, or automation bias.'
 - reviewer_model.assumption_note: 'The reviewer is an explicit policy, not a human model. These are stated assumptions and are not calibrated to, or validated against, observed analysts.'
 
-**Scope limit.** No SOC-specific fatigue or over-reliance measurement exists anywhere in the project, so no AegisTrace result may claim to model real reviewer load or real automation bias.
+**Scope limit.** No SOC-specific fatigue or over-reliance measurement exists anywhere in the project, so no ClueLattice result may claim to model real reviewer load or real automation bias.
 
 **Experiments.** `phase3-reviewer-simulation-1.0.0`
 
@@ -202,7 +202,7 @@ This ledger states what the AegisTrace project claims, at what evidence tier, an
 
 ## Non-claims
 
-- AegisTrace is not a SOC product, an IDS, or a deployable detector; all evaluation here is offline and research-grade.
+- ClueLattice is not a SOC product, an IDS, or a deployable detector; all evaluation here is offline and research-grade.
 - Output of the stub-assessor triage spine is not a triage result and carries no detection-quality claim.
 - No claim is made about analyst behaviour, over-reliance, trust calibration, or automation bias.
 - No claim is made that uncertainty routing is ineffective in general; only ascending threshold-distance uncertainty was tested.

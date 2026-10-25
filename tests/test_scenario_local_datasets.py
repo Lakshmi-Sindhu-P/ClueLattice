@@ -20,17 +20,17 @@ from uuid import uuid4
 import pytest
 from pydantic import ValidationError
 
-from aegistrace.features.behavioral import (
+from cluelattice.features.behavioral import (
     BEHAVIORAL_FEATURE_NAMES,
     BehavioralFeatureDataset,
     BehavioralFeatureRecord,
 )
-from aegistrace.features.causal import (
+from cluelattice.features.causal import (
     CAUSAL_FEATURE_NAMES,
     CausalFeatureDataset,
     CausalFeatureRecord,
 )
-from aegistrace.schemas.events import GroundTruthLabel
+from cluelattice.schemas.events import GroundTruthLabel
 
 OBSERVED_AT = datetime(2026, 10, 9, 12, 0, tzinfo=UTC)
 

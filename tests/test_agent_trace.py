@@ -6,7 +6,7 @@ from datetime import UTC, datetime
 
 import pytest
 
-from aegistrace.schemas.agent_trace import (
+from cluelattice.schemas.agent_trace import (
     AgentTraceRecord,
     LessonVersion,
     SolutionEntry,
@@ -20,7 +20,7 @@ SHA = "a" * 64
 def _source() -> TraceSourceReference:
     return TraceSourceReference(
         kind="repository",
-        reference="src/aegistrace/schemas/agent_trace.py",
+        reference="src/cluelattice/schemas/agent_trace.py",
         locator="blob:abc123#L1-L10",
         digest="b" * 64,
     )
@@ -32,7 +32,7 @@ def test_agent_trace_normalizes_time_and_preserves_linkage() -> None:
         span_id="c" * 32,
         event_index=0,
         occurred_at=datetime(2026, 9, 29, 12, 0, tzinfo=UTC),
-        issue_ref="Lakshmi-Sindhu-P/AegisTrace#1",
+        issue_ref="Lakshmi-Sindhu-P/ClueLattice#1",
         workspace_ref="workspace-1",
         agent_ref="codex-session-1",
         branch="trace-foundation",

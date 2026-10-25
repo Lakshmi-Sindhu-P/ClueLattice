@@ -1,4 +1,4 @@
-# AegisTrace Staged Roadmap
+# ClueLattice Staged Roadmap
 
 **Status:** Revised 2026-09-30 after the causal representation study, stability-artifact repair,
 Issue #3 overlap-subgroup diagnosis, and Issue #4 reproducibility hardening.

@@ -28,16 +28,16 @@ from uuid import UUID, uuid4
 
 import pytest
 
-import aegistrace.storage.reviews as reviews_mod
-from aegistrace.schemas.review import (
+import cluelattice.storage.reviews as reviews_mod
+from cluelattice.schemas.review import (
     EscalationState,
     HumanReview,
     ReviewDecision,
     ReviewTier,
     review_id_for,
 )
-from aegistrace.schemas.triage import AssessorRole
-from aegistrace.storage.reviews import (
+from cluelattice.schemas.triage import AssessorRole
+from cluelattice.storage.reviews import (
     HEAD_JOURNAL_TABLE,
     REVIEW_TABLE,
     ReviewStore,

@@ -1,7 +1,7 @@
 """Issue #21: wall-clock fit timing must never reach digest-covered artifact bytes.
 
 ``fit_seconds`` comes from ``time.perf_counter()`` in
-``aegistrace.evaluation.model_family``.  The four phase-3 producer scripts used to
+``cluelattice.evaluation.model_family``.  The four phase-3 producer scripts used to
 serialize it as ``fit_runtime_seconds`` and inside a ``runtime`` block, so their
 recorded raw-bytes SHA-256 digests could never be reproduced.  They must now strip
 the value before serialization while still reporting it on stderr for the operator.
@@ -13,7 +13,7 @@ from pathlib import Path
 
 import pytest
 
-from aegistrace.evaluation.model_family import artifact_fit_metadata
+from cluelattice.evaluation.model_family import artifact_fit_metadata
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 PRODUCER_SCRIPTS = (

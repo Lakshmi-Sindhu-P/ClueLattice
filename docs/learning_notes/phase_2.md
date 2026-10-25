@@ -17,7 +17,7 @@ The official Capture 34-1 file was not downloaded because its source page requir
 
 ## Why It Exists
 
-This is the first boundary between external telemetry and AegisTrace’s internal evidence model. Keeping parsing, validation, quality accounting, and storage together makes it possible to inspect the dataset before features or detectors hide its problems.
+This is the first boundary between external telemetry and ClueLattice’s internal evidence model. Keeping parsing, validation, quality accounting, and storage together makes it possible to inspect the dataset before features or detectors hide its problems.
 
 The adapter deliberately does not assign a new security verdict. It maps the source’s documented label into a coarse field and preserves the source’s detailed label; later evaluation can decide how those labels should be used.
 
@@ -33,8 +33,8 @@ Data quality is part of the model. The pipeline records missingness and label di
 
 ## Code to Understand
 
-1. `src/aegistrace/ingestion/iot23.py` — parser, label mapping, quality report, Parquet writer, and CLI.
-2. `src/aegistrace/ingestion/report.py` — sanitized parse issues and quality counts.
+1. `src/cluelattice/ingestion/iot23.py` — parser, label mapping, quality report, Parquet writer, and CLI.
+2. `src/cluelattice/ingestion/report.py` — sanitized parse issues and quality counts.
 3. `tests/test_iot23_ingestion.py` — accepted rows, malformed input, duplicates, output artifacts, and CLI behavior.
 4. `data/fixtures/iot23/conn.log.labeled` — safe synthetic Zeek-shaped input.
 5. `docs/datasets.md` — acquisition authorization and provenance policy.

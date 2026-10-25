@@ -23,7 +23,7 @@ from typing import Any
 import pytest
 from fastapi.testclient import TestClient
 
-from aegistrace.ui.app import NAV, create_app
+from cluelattice.ui.app import NAV, create_app
 
 PAGES = [href for href, _ in NAV]
 

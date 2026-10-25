@@ -1,4 +1,4 @@
-"""Falsification of every remaining never-executed guard in ```aegistrace/evaluation``.
+"""Falsification of every remaining never-executed guard in ```cluelattice/evaluation``.
 
 Each test runs one guard against the exact input it exists to reject. A guard that is never
 observed refusing the input it claims to refuse is an unverified claim, so every guard here is
@@ -15,22 +15,22 @@ from uuid import UUID, uuid4
 import numpy as np
 import pytest
 
-from aegistrace.evaluation.analyst_replay import (
+from cluelattice.evaluation.analyst_replay import (
     RoutingPolicy,
     _ranking_order,
     replay_capture,
     retrieval_curve,
 )
-from aegistrace.evaluation.baselines import evaluate_scenario_split
-from aegistrace.evaluation.hardening import alert_volume, calibration_summary
-from aegistrace.evaluation.improvement import RecordLike, fit_scores
-from aegistrace.evaluation.metrics import compute_binary_metrics
-from aegistrace.evaluation.model_family import (
+from cluelattice.evaluation.baselines import evaluate_scenario_split
+from cluelattice.evaluation.hardening import alert_volume, calibration_summary
+from cluelattice.evaluation.improvement import RecordLike, fit_scores
+from cluelattice.evaluation.metrics import compute_binary_metrics
+from cluelattice.evaluation.model_family import (
     _balanced_sample_weights,
     select_operating_threshold,
 )
-from aegistrace.features.network import FEATURE_NAMES, FeatureDataset, FeatureRecord
-from aegistrace.schemas.events import GroundTruthLabel
+from cluelattice.features.network import FEATURE_NAMES, FeatureDataset, FeatureRecord
+from cluelattice.schemas.events import GroundTruthLabel
 
 BENIGN = GroundTruthLabel.BENIGN
 MALICIOUS = GroundTruthLabel.MALICIOUS

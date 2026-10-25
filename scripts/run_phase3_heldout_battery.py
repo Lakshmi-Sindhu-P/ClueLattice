@@ -23,15 +23,15 @@ import numpy as np
 import pyarrow.parquet as pq
 from numpy.typing import NDArray
 
-from aegistrace.evaluation.improvement import make_model
-from aegistrace.evaluation.metrics import compute_binary_metrics
-from aegistrace.features.behavioral import (
+from cluelattice.evaluation.improvement import make_model
+from cluelattice.evaluation.metrics import compute_binary_metrics
+from cluelattice.features.behavioral import (
     BEHAVIORAL_FEATURE_NAMES,
     build_ctu13_behavioral_features,
     write_behavioral_feature_parquet,
 )
-from aegistrace.ingestion.ctu13 import parse_ctu13_binetflow
-from aegistrace.schemas.events import GroundTruthLabel
+from cluelattice.ingestion.ctu13 import parse_ctu13_binetflow
+from cluelattice.schemas.events import GroundTruthLabel
 
 POLICY_PATH = Path("configs/phase3_frozen_policy.json")
 CACHE_DIR = Path("data/evaluation/phase3_model_stability")

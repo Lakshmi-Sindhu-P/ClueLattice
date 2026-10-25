@@ -18,8 +18,8 @@ import ast
 import tomllib
 from pathlib import Path
 
-from aegistrace.schemas.review import HumanReview
-from aegistrace.storage import reviews as reviews_module
+from cluelattice.schemas.review import HumanReview
+from cluelattice.storage import reviews as reviews_module
 
 PYPROJECT = Path(__file__).resolve().parents[1] / "pyproject.toml"
 

@@ -14,10 +14,10 @@ import random
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
-from aegistrace.detection.evidence import build_evidence_bundle
-from aegistrace.detection.findings import aggregate_findings
-from aegistrace.detection.ml import emit_ml_detections
-from aegistrace.schemas.events import (
+from cluelattice.detection.evidence import build_evidence_bundle
+from cluelattice.detection.findings import aggregate_findings
+from cluelattice.detection.ml import emit_ml_detections
+from cluelattice.schemas.events import (
     Ctu13FlowDetails,
     EventProvenance,
     SecurityEvent,
@@ -25,11 +25,11 @@ from aegistrace.schemas.events import (
     SourceType,
     event_id_for,
 )
-from aegistrace.schemas.findings import EvidenceBundle
-from aegistrace.spine import run_spine
-from aegistrace.triage.corpus import build_corpus
-from aegistrace.triage.provider import ProviderDescriptor, ProviderKind, StubTriageProvider
-from aegistrace.triage.run import run_independent_triage
+from cluelattice.schemas.findings import EvidenceBundle
+from cluelattice.spine import run_spine
+from cluelattice.triage.corpus import build_corpus
+from cluelattice.triage.provider import ProviderDescriptor, ProviderKind, StubTriageProvider
+from cluelattice.triage.run import run_independent_triage
 
 BASE = datetime(2026, 10, 8, 12, 0, tzinfo=UTC)
 CREATED_AT = datetime(2026, 10, 8, 13, 0, tzinfo=UTC)

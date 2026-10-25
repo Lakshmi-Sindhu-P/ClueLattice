@@ -8,12 +8,16 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from aegistrace.detection.rules import apply_ctu13_rules, rule_predictions, write_detection_json
-from aegistrace.evaluation.baselines import BASELINE_SEED, evaluate_scenario_split
-from aegistrace.evaluation.metrics import compute_binary_metrics
-from aegistrace.features.network import FEATURE_VERSION, build_ctu13_features, write_feature_parquet
-from aegistrace.ingestion.ctu13 import parse_ctu13_binetflow
-from aegistrace.schemas.events import GroundTruthLabel
+from cluelattice.detection.rules import apply_ctu13_rules, rule_predictions, write_detection_json
+from cluelattice.evaluation.baselines import BASELINE_SEED, evaluate_scenario_split
+from cluelattice.evaluation.metrics import compute_binary_metrics
+from cluelattice.features.network import (
+    FEATURE_VERSION,
+    build_ctu13_features,
+    write_feature_parquet,
+)
+from cluelattice.ingestion.ctu13 import parse_ctu13_binetflow
+from cluelattice.schemas.events import GroundTruthLabel
 
 
 def _timestamp(value: str) -> datetime:

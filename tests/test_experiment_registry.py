@@ -6,8 +6,8 @@ from datetime import UTC, datetime
 
 import pytest
 
-from aegistrace.evaluation.uncertainty import confusion_intervals, wilson_interval
-from aegistrace.schemas.experiments import ExperimentArtifact, ExperimentRegistry, ExperimentRun
+from cluelattice.evaluation.uncertainty import confusion_intervals, wilson_interval
+from cluelattice.schemas.experiments import ExperimentArtifact, ExperimentRegistry, ExperimentRun
 
 SHA = "a" * 64
 

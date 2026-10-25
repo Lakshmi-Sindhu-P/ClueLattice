@@ -38,19 +38,19 @@ try:
 except ModuleNotFoundError:  # executed as a plain script with ``scripts`` on sys.path
     from run_phase3_heldout_battery import load_feature_parquet
 
-from aegistrace.evaluation.analyst_replay import (
+from cluelattice.evaluation.analyst_replay import (
     DEFAULT_SEED,
     BudgetSpec,
     RoutingPolicy,
 )
-from aegistrace.evaluation.reviewer_simulation import (
+from cluelattice.evaluation.reviewer_simulation import (
     DEFAULT_SHIFT_BUDGETS,
     DEFAULT_STRICTNESS_VALUES,
     CaptureSimulation,
     ReviewerOutcome,
     simulate_capture,
 )
-from aegistrace.schemas.common import normalize_utc
+from cluelattice.schemas.common import normalize_utc
 
 POLICY_PATH = Path("configs/phase3_frozen_policy.json")
 CACHE_DIR = Path("data/evaluation/phase3_model_stability")

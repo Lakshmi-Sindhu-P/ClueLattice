@@ -25,12 +25,12 @@ from uuid import uuid4
 import pytest
 from pydantic import ValidationError
 
-from aegistrace.detection.evidence import build_evidence_bundle
-from aegistrace.detection.findings import aggregate_findings
-from aegistrace.detection.ml import emit_ml_detections
-from aegistrace.ingestion.ctu13 import parse_ctu13_binetflow
-from aegistrace.review.history import append_review, new_history
-from aegistrace.schemas.events import (
+from cluelattice.detection.evidence import build_evidence_bundle
+from cluelattice.detection.findings import aggregate_findings
+from cluelattice.detection.ml import emit_ml_detections
+from cluelattice.ingestion.ctu13 import parse_ctu13_binetflow
+from cluelattice.review.history import append_review, new_history
+from cluelattice.schemas.events import (
     Ctu13FlowDetails,
     EventProvenance,
     SecurityEvent,
@@ -39,8 +39,8 @@ from aegistrace.schemas.events import (
     event_id_for,
     event_id_v1_for,
 )
-from aegistrace.schemas.findings import DetectionSeverity
-from aegistrace.schemas.review import (
+from cluelattice.schemas.findings import DetectionSeverity
+from cluelattice.schemas.review import (
     EscalationState,
     HumanReview,
     ReviewDecision,
@@ -48,7 +48,7 @@ from aegistrace.schemas.review import (
     review_id_for,
     review_id_v1_for,
 )
-from aegistrace.schemas.triage import AssessorRole, TriageCategory, triage_id_for
+from cluelattice.schemas.triage import AssessorRole, TriageCategory, triage_id_for
 
 CREATED_AT = datetime(2026, 10, 9, 12, 0, tzinfo=UTC)
 FIXTURE = Path("data/fixtures/ctu13/scenario_11.binetflow")

@@ -41,7 +41,7 @@ issue reference and a content digest when an issue snapshot is used as evidence.
 ## Local execution traces
 
 Trace files are redacted JSONL under ignored local paths. Each record is validated by
-`src/aegistrace/schemas/agent_trace.py` and `scripts/validate_agent_trace.py`.
+`src/cluelattice/schemas/agent_trace.py` and `scripts/validate_agent_trace.py`.
 
 The record links:
 

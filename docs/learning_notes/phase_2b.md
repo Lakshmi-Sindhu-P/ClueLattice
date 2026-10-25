@@ -2,7 +2,7 @@
 
 ## What was actually validated
 
-On 2026-09-21, AegisTrace ingested the authoritative CTU-13 Scenario 11
+On 2026-09-21, ClueLattice ingested the authoritative CTU-13 Scenario 11
 (`CTU-Malware-Capture-Botnet-52`) `capture20110818-2.binetflow` artifact. The file contained
 107,251 labeled bidirectional flow records. All 107,251 rows were accepted, with no malformed or
 duplicate source rows. The run produced typed Parquet, a quality report, and a dataset manifest;
@@ -27,7 +27,7 @@ bytes and endpoints.
 Zeek `conn.log` records a Zeek connection observation with Zeek's UID, connection state, history,
 service, originator/responder byte and packet fields, and optional tunnel metadata. CTU-13's
 Argus text flow has different field names and semantics: its `Dir`, `State`, `TotPkts`, `TotBytes`,
-`SrcBytes`, and TOS fields come from Argus, and some non-IP flows use MAC addresses. AegisTrace
+`SrcBytes`, and TOS fields come from Argus, and some non-IP flows use MAC addresses. ClueLattice
 maps shared concepts into the canonical event envelope, while keeping the complete source label,
 Argus fields, and non-IP source addresses in `Ctu13FlowDetails`. The CTU-13 adapter is a separate
 module rather than a format branch inside the IoT-23 Zeek adapter.
@@ -43,7 +43,7 @@ known with certainty. Scenario labels are more detailed strings, including `From
 labels remain unknown. “Unknown” is a deliberate evidence-preserving outcome, not a missing
 implementation.
 
-These are authoritative dataset annotations, not AegisTrace inference. The adapter stores the
+These are authoritative dataset annotations, not ClueLattice inference. The adapter stores the
 raw source label and its provenance so later evaluation can choose a more specific policy without
 rewriting the original annotation.
 

@@ -10,14 +10,14 @@ from pathlib import Path
 import pyarrow.parquet as pq
 import pytest
 
-from aegistrace.ingestion import ctu13
-from aegistrace.ingestion.ctu13 import (
+from cluelattice.ingestion import ctu13
+from cluelattice.ingestion.ctu13 import (
     CTU13_DATASET_NAME,
     CTU13_SCENARIO_ID,
     parse_ctu13_binetflow,
     write_ctu13_ingestion_outputs,
 )
-from aegistrace.schemas.events import Ctu13FlowDetails, GroundTruthLabel
+from cluelattice.schemas.events import Ctu13FlowDetails, GroundTruthLabel
 
 FIXTURE_PATH = Path("data/fixtures/ctu13/scenario_11.binetflow")
 INGESTED_AT = datetime(2026, 9, 21, 1, 0, tzinfo=UTC)
@@ -339,7 +339,7 @@ def test_issue_37_the_shared_rule_is_one_definition() -> None:
     elsewhere in this codebase, so the two CLIs are checked to delegate rather than restate.
     """
 
-    from aegistrace.ingestion.report import ingestion_exit_code, ingestion_exit_reason
+    from cluelattice.ingestion.report import ingestion_exit_code, ingestion_exit_reason
 
     report = parse_ctu13_binetflow(
         FIXTURE_PATH, ingested_at=INGESTED_AT, report_generated_at=INGESTED_AT
