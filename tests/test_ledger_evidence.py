@@ -13,7 +13,9 @@ import hashlib
 import json
 from pathlib import Path
 
+import pytest
 from scripts.validate_results_ledger import build_summary, validate_data
+from scripts.validate_results_ledger import main as validate_ledger_main
 
 ARTIFACT_REL = "data/eval/x.json"
 EXPERIMENT_ID = "exp"
@@ -130,6 +132,43 @@ def test_prose_evidence_is_allowed_and_unenforced(tmp_path: Path) -> None:
     assert summary["evidence_strings_total"] == 1
     assert summary["evidence_strings_enforced"] == 0
     assert summary["assertions_checked"] == 0
+
+
+def test_cli_catches_a_fabricated_reference_end_to_end(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """Issue #34, resolver layer: the CLI itself must fail on an unresolvable reference.
+
+    The unit tests above call `validate_data` directly; this one exercises the real entry point
+    (`main` with `--require-artifacts`, exactly as CI runs it) so the catch is proven at the
+    process boundary — a nonzero exit and a `does not resolve` line on stderr — with a passing
+    positive control to show the failure is caused by the fabricated reference alone.
+    """
+
+    digest = _write_artifact(tmp_path, {"headline": {"best": True}})
+    registry_path = tmp_path / "registry.json"
+    registry_path.write_text(json.dumps(_registry(digest)), encoding="utf-8")
+    ledger_path = tmp_path / "ledger.json"
+    monkeypatch.chdir(tmp_path)  # main() resolves artifact paths against the cwd
+
+    def run(evidence: list[str]) -> tuple[int, str]:
+        ledger_path.write_text(
+            json.dumps({"schema_version": "1.0.0", "claims": [_claim(evidence)]}),
+            encoding="utf-8",
+        )
+        code = validate_ledger_main(
+            [str(ledger_path), "--registry", str(registry_path), "--require-artifacts"]
+        )
+        return code, capsys.readouterr().err
+
+    # Negative control: the reference does not exist in the artifact → process fails.
+    code, stderr = run(["headline.absent = true"])
+    assert code == 1, "a fabricated reference must fail the CLI"
+    assert "does not resolve" in stderr
+
+    # Positive control: the real reference passes, so the failure above was the reference alone.
+    code, stderr = run(["headline.best = true"])
+    assert code == 0, f"the genuine reference must pass, got: {stderr}"
 
 
 def test_coverage_counts_in_summary_are_correct(tmp_path: Path) -> None:
