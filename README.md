@@ -1,14 +1,51 @@
 # ClueLattice
 
-**Evidence-Grounded AI Security Triage**
+**Evidence-grounded AI security triage.** A research repository in which every claim the
+documentation makes points at an artifact, a digest, and a ledger entry — including the claims
+that were refuted, which stay in the ledger with their refutation attached.
 
-Licensed under the [MIT License](LICENSE).
+MIT licensed. Defensive only: offline datasets, fixtures, and containers; no scanning of unowned
+systems and no exploit tooling.
 
-ClueLattice is a defensive AI-security research project investigating whether a provenance-first,
-multi-model system can produce trustworthy investigation recommendations while remaining grounded in
-verifiable evidence and preserving human oversight.
+## At a glance
 
-> **Current status:** Phase 2’s IoT-23 Zeek adapter remains validated against safe synthetic data only. Phase 2B’s CTU-13 Argus-flow adapter and Phase 3 feature/rule/ML foundations are implemented. Validation-only improvement, hardening, model-family, cross-scenario operating-point, causal `1.2.0` representation, Issue #3 overlap-subgroup, and reproducibility-hardening studies use licensed CTU-13 text flows while keeping Scenario 7 sealed. A bounded Isolation Forest anomaly-prioritization experiment exists, but no fusion, LLM, dashboard, production, or incident-detection claim exists.
+| | |
+| --- | --- |
+| **Question** | Can a provenance-first, multi-model triage system recommend security investigations without overstating what the telemetry shows? |
+| **Data** | Licensed CTU-13 labeled text flows — Scenario 11: **107,251 rows accepted, 0 rejected**; Scenario 47: 558,912 / 7; Scenario 53: 325,471 / 0. An IoT-23 Zeek `conn.log` adapter is validated against safe synthetic fixtures. |
+| **Bounded evidence** | Scenario-separated training/validation (107,251 / 129,832 / 114,077 rows), a sensitivity-frozen threshold of 0.20, a 450-policy reviewer sweep, and five registry-linked experiment runs. |
+| **Strongest result** | Ranking alerts by model score retrieved at least as many true positives as threshold-distance "uncertainty" routing at **0 of 9 reviewer budgets on all six stage-1 captures** — a negative result that disputes a popular intuition and is kept, rather than deleted, in the ledger. |
+| **What is not claimed** | No fusion, no LLM triage, no dashboard, no production use, no incident-detection or model-performance claim. Scenario 7 is the sealed holdout and may be opened once, after the policy is frozen. |
+| **Verify it yourself** | [results ledger](docs/results.md) (machine-checked against the [experiment registry](docs/experiment_registry.json)) · [limitations](docs/limitations.md) · [resume evidence](docs/resume_evidence.md) · [artifact manifest](docs/artifact_manifest.json) |
+
+## What this repository is
+
+A single research question investigated in public, with the failure modes recorded as carefully
+as the results: does a provenance-first system of specialists — deterministic rules, supervised
+models, anomaly detection, temporal features — let a junior reviewer handle basic triage without
+removing expert escalation?
+
+The repository currently holds the defensible bottom half of that system, deliberately:
+
+- **Ingestion and provenance** — two source adapters (IoT-23 Zeek, CTU-13 Argus) that emit typed
+  canonical events, deterministic UUIDv5 identities, quality reports, and checksum-backed dataset
+  manifests. 107,251 rows accepted from Scenario 11 with zero rejected or duplicated source rows.
+- **Features under a leakage contract** — a 26-column `1.0.0` flow feature set, a `1.1.0`
+  scenario-local behavioral family, and a `1.2.0` prior-only causal family, each version reviewed
+  for temporal leakage and frozen before comparison.
+- **Detectors and a comparison protocol** — three evidence-traceable flow rules, then a
+  validation-only benchmark across rules, logistic regression, random forest, extra trees,
+  histogram gradient boosting, and a linear SVM, with a sealed-scenario guard and per-case
+  disagreement output.
+- **A claim ledger** — every statement the project makes carries an evidence tier
+  (`OBSERVED_FACT`, `DETERMINISTIC_DERIVATION`, `REFERENCE_BACKED_FACT`, `UNKNOWN_INSUFFICIENT_EVIDENCE`),
+  the artifact that backs it, and an explicit statement of what it does **not** support. A validator
+  fails the build if a claim drifts from its citation.
+
+The parts that would make this operational — deterministic finding aggregation, evidence
+retrieval, independent LLM review, and a human review tier — are planned and documented, not
+implemented. That boundary is the point of the repository: it shows what the evidence currently
+supports and what it would take to support more.
 
 ## Local Development
 
@@ -134,4 +171,7 @@ ClueLattice must remain defensive. Testing is limited to offline datasets, synth
 
 ## Portfolio Integrity
 
-This repository does not claim production use, security impact, deployment scale, model performance, or evaluation results. See [resume evidence](docs/resume_evidence.md) for the current claim boundary.
+Nothing here is presented as production use, security impact, deployment scale, or operational
+detection capability. The bounded validation results that do exist are recorded in the
+[results ledger](docs/results.md) with their scope limits attached, and
+[resume evidence](docs/resume_evidence.md) separates what was built from what is planned.
