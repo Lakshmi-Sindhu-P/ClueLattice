@@ -73,12 +73,20 @@ because they are ordinary outcomes of a bounded run, not governance refusals:
 
 ## Current configuration and data status
 
-- `configs/triage_provider_freeze.json` has `status: "BLOCKED_HUMAN"` and
-  `transport_status: "NOT IMPLEMENTED - no client exists"`.
-- **No provider is configured.** The two roles are marked `UNSET - pending owner approval`, and
-  the assessor-independence requirement is `NOT ESTABLISHED`.
-- **No data has been sent anywhere.** `measured_spend` is `0`. Both implemented providers are
-  offline; a run using them produces `synthetic=True` output that must not be treated as a model's
-  assessment.
-- Enabling egress requires a human to approve a provider, a credential path, and an approved
-  freeze status. That is a governance decision this boundary is built to force, not to pre-empt.
+- `configs/triage_provider_freeze.json` has `status: "HUMAN_APPROVED"` (owner approval recorded
+  in its `approval` block, 2026-10-27) and
+  `transport_status: "IMPLEMENTED - gate now open for approved status"`. The boundary refuses
+  egress-requiring providers unless the status is one of `APPROVED`, `EGRESS_APPROVED`,
+  `HUMAN_APPROVED` (`APPROVED_EGRESS_FREEZE_STATUSES` in `src/cluelattice/triage/run.py`).
+- **Both roles are designated:** `triage_analyst` = `opencode-go / deepseek-v4.1-flash`,
+  `expert_adjudicator` = `opencode-go / mimo-v2.6-flash`; the assessor-independence requirement is
+  `ESTABLISHED` (distinct model families, both probed responsive on 2026-10-27).
+- **No experiment data has been sent anywhere.** `measured_spend` records four capability-probe
+  single-line requests on 2026-10-27 (no snapshot, no corpus content) and `0` experiment runs;
+  `provider_runs_completed` is `0`. Both implemented providers are offline; a run using them
+  produces `synthetic=True` output that must not be treated as a model's assessment.
+- **The remaining blocker is implementation, not governance:** the repository has no LLM client
+  yet. Adding the owner-approved client + credential path (`OPENCODE_API_KEY`), running the
+  mandated smoke test, then the frozen 20-bundle A/B is the next stage (issue #11). The boundary
+  refuses anything that bypasses the freeze; that refusal is what this section exists to keep
+  honest.

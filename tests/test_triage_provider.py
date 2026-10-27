@@ -1,9 +1,10 @@
 """Tests for the provider boundary and the independent-triage orchestrator.
 
 The properties defended here are the ones the governance freeze depends on: an offline provider can
-never be mistaken for a real model, a remote provider cannot run while the freeze is
-``BLOCKED_HUMAN``, a recorded response cannot be invented for an unknown snapshot, and a run is
-deterministic and refuses to compare two different inputs.
+never be mistaken for a real model, a remote provider cannot run while the freeze status is not an
+approved value (asserted against an explicitly re-blocked status — the live freeze became
+``HUMAN_APPROVED`` on 2026-10-27), a recorded response cannot be invented for an unknown snapshot,
+and a run is deterministic and refuses to compare two different inputs.
 """
 
 from __future__ import annotations
@@ -407,15 +408,21 @@ def test_stub_provider_rejects_a_recorded_descriptor() -> None:
         StubTriageProvider(_recorded_descriptor(), CREATED_AT)
 
 
-def test_remote_provider_is_refused_under_blocked_human() -> None:
+def test_remote_provider_is_refused_under_a_blocked_freeze() -> None:
+    # The live freeze is HUMAN_APPROVED (owner approval, 2026-10-27), so this gate is pinned
+    # against an explicitly re-blocked copy instead of the repository's live status. The live
+    # status itself is pinned by test_live_freeze_status_is_owner_approved in
+    # tests/test_spine_integration.py.
     provider = _RemoteProvider()
+    blocked = _freeze()
+    blocked["status"] = "BLOCKED_HUMAN"
 
     with pytest.raises(PermissionError) as excinfo:
         run_independent_triage(
             bundles=[_bundle()],
             analyst_provider=provider,
             adjudicator_provider=provider,
-            freeze=_freeze(),
+            freeze=blocked,
             created_at=CREATED_AT,
         )
 
@@ -738,14 +745,19 @@ def test_one_assessor_under_two_labels_is_refused() -> None:
 
 
 def test_governance_gate_precedes_the_independence_check() -> None:
+    # Ordering proof: with a blocked freeze the egress refusal must fire before the independence
+    # check. The live freeze is HUMAN_APPROVED (2026-10-27), so the gate state is synthesized here
+    # rather than read from the repository.
     provider = _RemoteProvider()
+    blocked = _freeze()
+    blocked["status"] = "BLOCKED_HUMAN"
 
     with pytest.raises(PermissionError, match="requires network egress"):
         run_independent_triage(
             bundles=[_bundle()],
             analyst_provider=provider,
             adjudicator_provider=provider,
-            freeze=_freeze(),
+            freeze=blocked,
             created_at=CREATED_AT,
         )
 

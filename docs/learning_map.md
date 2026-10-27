@@ -34,7 +34,7 @@ a conclusion can never be stronger than the evidence beneath it.
 | 4 | Detectors and their frozen policy | [`phase3_detector_hardening.md`](phase3_detector_hardening.md), [`methodology.md`](methodology.md) | VALIDATED |
 | 5 | Findings, evidence bundles, and claim verification | [`architecture.md`](architecture.md) | CURRENT / IMPLEMENTED |
 | 6 | Analyst-outcome evidence program (stages 1-3) | [`analyst_outcome_program.md`](analyst_outcome_program.md) | VALIDATED (stage 1 REFUTED) |
-| 7 | LLM triage: the provider boundary, egress gate, and the frozen A/B protocol | [`triage_provider_boundary.md`](triage_provider_boundary.md), [`llm_ab_preregistration.md`](llm_ab_preregistration.md) | APPROVED INTENT / DESIGN — `BLOCKED_HUMAN` |
+| 7 | LLM triage: the provider boundary, egress gate, and the frozen A/B protocol | [`triage_provider_boundary.md`](triage_provider_boundary.md), [`llm_ab_preregistration.md`](llm_ab_preregistration.md) | EGRESS APPROVED (`HUMAN_APPROVED`, 2026-10-27) — run pending the LLM client (issue #11) |
 | 8 | Tiered human review and the append-only history | [`architecture.md`](architecture.md) | CURRENT / IMPLEMENTED |
 | 9 | Local review UI | [`ui_design_directions.md`](ui_design_directions.md) | DESIGN PROPOSED — awaiting owner choice |
 

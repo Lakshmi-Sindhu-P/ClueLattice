@@ -3,8 +3,8 @@
 This script proves the plumbing end to end and nothing more. Both assessors are deterministic
 mechanical stubs, so the output is **not** a triage result and must never be reported as one. No
 network is used and no model is configured; the two providers exist only to exercise the boundary.
-The repository's freeze artifact is loaded and passed through unchanged, so its ``BLOCKED_HUMAN``
-status governs the run exactly as it would in production.
+The repository's freeze artifact is loaded and passed through unchanged, so its recorded ``status``
+governs the run exactly as it would in production (offline providers need no approval).
 
 Only ``--output`` is written.
 """

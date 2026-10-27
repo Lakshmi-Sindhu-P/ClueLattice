@@ -239,7 +239,8 @@ def create_app(
         context["record"] = _selected_record(context["artifact"], spine_id)
         # Always False today, and that is the honest answer rather than a placeholder: the spine
         # summary this UI reads carries no assessment pair and no comparison record, and no real
-        # (non-synthetic) assessment run exists - the provider freeze is BLOCKED_HUMAN. The template
+        # (non-synthetic) assessment run has executed yet - egress was approved on 2026-10-27 but
+        # the LLM client and the run do not exist yet (issue #11). The template
         # renders an explicit "not available" state. It must never invent two assessors.
         context["comparison_available"] = False
         return templates.TemplateResponse(request, "comparison.html", context)
