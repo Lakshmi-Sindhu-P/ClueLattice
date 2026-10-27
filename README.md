@@ -11,6 +11,7 @@ systems and no exploit tooling.
 
 | | |
 | --- | --- |
+| **Status** | **Work in progress.** Phases 0–3 (ingestion, provenance, features, detectors, evaluation) are implemented and validated within the boundaries below; the triage layers that would make the system useful — finding aggregation, evidence retrieval, independent LLM review, and the human review tier — are designed and documented, not built. |
 | **Question** | Can a provenance-first, multi-model triage system recommend security investigations without overstating what the telemetry shows? |
 | **Data** | Licensed CTU-13 labeled text flows — Scenario 11: **107,251 rows accepted, 0 rejected**; Scenario 47: 558,912 / 7; Scenario 53: 325,471 / 0. An IoT-23 Zeek `conn.log` adapter is validated against safe synthetic fixtures. |
 | **Bounded evidence** | Scenario-separated training/validation (107,251 / 129,832 / 114,077 rows), a sensitivity-frozen threshold of 0.20, a 450-policy reviewer sweep, and five registry-linked experiment runs. |
