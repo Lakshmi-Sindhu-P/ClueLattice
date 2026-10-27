@@ -25,7 +25,7 @@ writes and renders it honestly, including the states where it has nothing to sho
 | Synthetic marking, artifact-unavailable state, "AI assessment not available" state | **CURRENT / IMPLEMENTED** |
 | A durable persistence layer (`storage/`) | **CURRENT / IMPLEMENTED** for human-review history (append-only DuckDB store, optional `storage` extra) |
 | The review-append write path | **CURRENT / IMPLEMENTED** — `POST /decision` appends a `HumanReview` when a store path is configured, and refuses visibly when it is not |
-| Real (non-synthetic) assessment data for the comparison view | **BLOCKED_HUMAN** (provider freeze) |
+| Real (non-synthetic) assessment data for the comparison view | **NOT YET PRODUCED** — egress approved 2026-10-27 (`HUMAN_APPROVED`), but no LLM client or run exists yet (issue #11) |
 
 Two things the UI deliberately does **not** do, both stated on the pages themselves rather than
 left implicit:
@@ -232,7 +232,7 @@ UI reads one JSON artifact for evidence and only the human-review history has a 
 | Review requirements | `TierAssignment`, `ReviewTier`, `MachineCheck` | `src/cluelattice/schemas/review.py`, `src/cluelattice/review/tiers.py` | Yes (schema + `classify_tier`). |
 | Human decision | `HumanReview`, `ReviewHistory` | `src/cluelattice/schemas/review.py`, `src/cluelattice/review/history.py`, `src/cluelattice/storage/reviews.py` | Yes — schema, append-only helper, **and** a durable append-only store (`ReviewStore`). |
 | Top-level page/run identity | `SpineRecord` (fields: `spine_id`, `snapshot_digest`, `triage_run`, `comparison`, `tier`, `review_history`, `synthetic`) | `src/cluelattice/spine.py` | Yes (schema + `run_spine`). |
-| Egress/boundary truth | `ProviderDescriptor`, `ProviderResponse.synthetic`, freeze artifact | `src/cluelattice/triage/provider.py`, `configs/triage_provider_freeze.json` | Yes. Freeze status is `BLOCKED_HUMAN` and assessor independence is `NOT ESTABLISHED`. |
+| Egress/boundary truth | `ProviderDescriptor`, `ProviderResponse.synthetic`, freeze artifact | `src/cluelattice/triage/provider.py`, `configs/triage_provider_freeze.json` | Yes. Freeze status is `HUMAN_APPROVED` and assessor independence is `ESTABLISHED` (2026-10-27); no run has executed yet. |
 
 None of these dependencies is a network dependency. All reads are over local, already-computed
 records; binding is `127.0.0.1` only.
@@ -251,11 +251,11 @@ them so implementation never fabricates them:
    `PLANNED, NOT IMPLEMENTED`, and PostgreSQL stays deferred. The `ui/` package, the FastAPI
    dependency and the `storage/` package all exist as optional extras.
 2. **Real (non-synthetic) independent assessment data.** `configs/triage_provider_freeze.json` is
-   `BLOCKED_HUMAN`; assessor independence is `NOT ESTABLISHED`; there is no LLM client or credential
-   path, and no network-capable import exists in the provider boundary
+   `HUMAN_APPROVED` and assessor independence is `ESTABLISHED` (both since 2026-10-27), but there
+   is still no LLM client or credential path, and no network-capable import exists in the provider boundary
    (`src/cluelattice/triage/provider.py`). Only offline recorded-replay and stub providers can run
    today, and those are synthetic by construction. The AI-comparison view can therefore only ever
-   show synthetic assessments until the freeze is resolved by a human.
+   show synthetic assessments until an actual approved-provider run exists (issue #11).
 3. **A raw-event store serving the provenance spine's bottom.** `SecurityEvent` is a real schema,
    and ingestion adapters exist, but a durable event store usable by a UI is planned, not built.
 4. **A numeric confidence measure to band.** There is no numeric confidence percentage in the
@@ -307,7 +307,7 @@ and not a new governance rule.
 | This document | **APPROVED INTENT / DESIGN** (owner approval quoted in Section 1) |
 | Investigation Bench (C) as shell | **CURRENT / IMPLEMENTED** (shell, navigation, five views) |
 | Chain of Custody (A) as evidence/provenance system | **CURRENT / IMPLEMENTED** (provenance view; reads one artifact) |
-| Two Witnesses (B) as dedicated comparison view | **CURRENT / IMPLEMENTED as an absence state** — the view exists and correctly reports "not available"; its real content is **BLOCKED_HUMAN** |
+| Two Witnesses (B) as dedicated comparison view | **CURRENT / IMPLEMENTED as an absence state** — the view exists and correctly reports "not available"; its real content is **not yet produced** (egress approved 2026-10-27, run pending) |
 | Five-step investigator workflow | **CURRENT / IMPLEMENTED** (navigation order) |
 | The five views, navigation, component boundaries in Sections 3–5 | **CURRENT / IMPLEMENTED** |
 | FastAPI / static-HTML stack | **CURRENT / IMPLEMENTED**, as an optional `ui` extra so the library never needs a server |
@@ -316,7 +316,7 @@ and not a new governance rule.
 | The review-append write path | **CURRENT / IMPLEMENTED** — `POST /decision` appends a `HumanReview` when a store path is configured, and returns an explicit "NOT recorded" page when it is not |
 | Underlying schemas the views read | **CURRENT / IMPLEMENTED** (per `MEMORY.md`) |
 | Provider boundary, egress refusal, `synthetic` enforcement | **CURRENT / IMPLEMENTED and VALIDATED** (per `MEMORY.md` and `src/cluelattice/triage/provider.py`) |
-| Real non-synthetic triage run | **BLOCKED_HUMAN** / **NOT ESTABLISHED** (freeze artifact), so **PLANNED, NOT IMPLEMENTED** |
+| Real non-synthetic triage run | **APPROVED BUT NOT YET RUN** — freeze `HUMAN_APPROVED`, independence `ESTABLISHED` (2026-10-27); no LLM client yet, so **PLANNED, NOT IMPLEMENTED** |
 
 ---
 

@@ -62,7 +62,7 @@ tuning.
 |---|---|---|
 | Findings and evidence bundles | `IMPLEMENTED` | Produce immutable investigation units that retain every contributing event, detector output, score, rule, and limitation. |
 | Reference-backed verification | `PARTIAL` | Retrieve vetted MITRE/CISA/NVD/Zeek/Cowrie/dataset references with explicit source and retrieval provenance. Claim verification is implemented; external reference retrieval is not. |
-| LLM A triage | `PARTIAL` | Summarize bounded evidence, uncertainty, and next step in structured output. Assessor isolation, input snapshotting, and assessment admission are implemented; the provider run is `BLOCKED_HUMAN` on credentials and demonstrated independence. |
+| LLM A triage | `PARTIAL` | Summarize bounded evidence, uncertainty, and next step in structured output. Assessor isolation, input snapshotting, and assessment admission are implemented; egress is approved (`HUMAN_APPROVED`, independence `ESTABLISHED`, 2026-10-27) and the run is pending the LLM client (issue #11). |
 | LLM B adjudication | `PARTIAL` | Independently challenge the same evidence without seeing LLM A; freeze both outputs before comparison. Same boundary as LLM A. |
 | Agreement/conflict engine | `IMPLEMENTED` | Deterministically label corroboration, contradiction, insufficient evidence, disagreement, and escalation. |
 | Tiered human review | `IMPLEMENTED` | Separate machine-verifiable checks, guided junior review, expert review, and insufficient-evidence outcomes. |

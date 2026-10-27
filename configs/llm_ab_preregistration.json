@@ -47,7 +47,7 @@
   "decision_rule": {
     "rule": "H1 is supported if and only if the run is complete (all 20 planned bundles assessed by both roles and one comparison stored per bundle, with no abort) AND mean_per_bundle_agreement_score >= 0.50.",
     "support_direction": "A complete run with mean_per_bundle_agreement_score greater than or equal to the pre-registered 0.50 counts as support.",
-    "threshold": 0.50,
+    "threshold": 0.5,
     "threshold_is_a_judgement_call": true,
     "incomplete_run_handling": "A run that aborts (call, assessment, or bundle budget exhaustion; a snapshot digest mismatch; or an output that cannot be admitted as an assessment) is not a complete run. It cannot support H1, and it does not refute H1 either: it leaves H1 unassessed. Partial results must never be aggregated over the completed subset, and the run must never be extended or restarted with a different sample to rescue the decision."
   },
@@ -127,7 +127,7 @@
   "judgement_calls": [
     {
       "name": "agreement_score support threshold 0.50",
-      "value": 0.50,
+      "value": 0.5,
       "basis": "At Jaccard 0.50 the shared citations are at least as numerous as the combined divergent citations (shared >= symmetric-difference), which is a majority-overlap convention. No published anchor for this quantity exists in the repository, so this is a stated convention and not a derived value. It is fixed here so that it cannot be chosen after seeing the mean."
     },
     {
@@ -152,21 +152,29 @@
     }
   ],
   "pre_data_attestation": {
-    "observed_at": "2026-10-09T00:00:00Z",
+    "observed_at": "2026-10-27T05:45:00Z",
     "observation_method": "Read configs/triage_provider_freeze.json, searched data/ for stored TriageAssessment or TriageComparison records, and inspected docs/experiment_registry.json for any run referencing a provider or triage run. Every field below is the value observed at that read, not an assumption.",
-    "provider_freeze_status": "BLOCKED_HUMAN",
-    "measured_spend": "0 - nothing has been sent",
-    "measured_spend_source_note": "The freeze file records this exact string at budget.measured_spend (the only measured_spend key in the file; it is not under egress_policy). The numeric spend is zero and no request has been made.",
+    "provider_freeze_status": "HUMAN_APPROVED",
+    "measured_spend": "0.00 USD - 4 capability-probe requests sent to the zen/go gateway on 2026-10-27 under owner-approved Phase 0 (2 returned a completion, 2 failed: one unavailable, one deprecated); single-line capability prompts only, no project, corpus, or dataset content; 0 experiment runs, 0 assessments, 0 evidence snapshots sent",
+    "measured_spend_source_note": "The freeze file records this exact string at budget.measured_spend (the only measured_spend key in the file; it is not under egress_policy). This attestation tracks the LIVE freeze state and scripts/validate_preregistration.py enforces the equality.",
     "provider_runs_completed": 0,
     "provider_runs_completed_definition": "Count of completed runs against a REMOTE (egress-requiring) provider. It is zero. One offline run_independent_triage demonstration exists (scripts/run_offline_spine_demo.py -> data/evaluation/triage_spine/offline_spine_demo.json) and used only deterministic offline stub providers with network_egress \"none\" and providers_configured false, so it is not a provider run.",
     "assessments_on_disk": 0,
     "assessments_on_disk_definition": "Count of persisted TriageAssessment or TriageComparison records in the repository. It is zero. The offline spine demo artifact stores a routing record (tier, review_count, snapshot_digest), not an assessment, and no assessment or comparison record is written anywhere because run_independent_triage never writes to disk.",
     "corroborating_evidence": [
-      "configs/triage_provider_freeze.json status BLOCKED_HUMAN and budget.measured_spend \"0 - nothing has been sent\"",
-      "configs/triage_provider_freeze.json independence_requirement.status NOT ESTABLISHED",
-      "the two roles' configuration is UNSET - pending owner approval",
+      "configs/triage_provider_freeze.json status HUMAN_APPROVED (owner approval recorded in its approval block) and budget.measured_spend matches this attestation",
+      "configs/triage_provider_freeze.json independence_requirement.status ESTABLISHED (distinct-family pair: deepseek-v4.1-flash + mimo-v2.6-flash, probed 2026-10-27)",
+      "the two roles' configurations are designated (rebuild-plan Phase 0, freeze assessment_roles)",
       "no assessment, comparison, or triage-run file exists under data/",
       "docs/experiment_registry.json contains no run whose command or configuration references a provider or triage run"
-    ]
+    ],
+    "supersedes_observation": {
+      "observed_at": "2026-10-09T00:00:00Z",
+      "provider_freeze_status": "BLOCKED_HUMAN",
+      "measured_spend": "0 - nothing has been sent",
+      "note": "Original pre-approval observation, retained because the attestation fields track live freeze state (validator enforces equality) while the historical state must stay auditable."
+    },
+    "capability_probes_sent": 4,
+    "capability_probes_sent_definition": "Non-experiment single-line capability prompts sent to the zen/go gateway on 2026-10-27 (2 completions, 2 failures). They carried no evidence snapshot and do not count under the provider_runs_completed definition."
   }
 }

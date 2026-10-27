@@ -242,8 +242,12 @@ def test_snapshot_digest_matches_the_bundle() -> None:
     assert record.snapshot_digest == snapshot_digest(bundle)
 
 
-def test_remote_descriptor_is_refused_under_the_repo_freeze() -> None:
-    assert FREEZE["status"] == "BLOCKED_HUMAN"
+def test_remote_descriptor_is_refused_under_a_blocked_freeze() -> None:
+    # The live freeze was flipped to HUMAN_APPROVED on 2026-10-27 (owner approval, issue #11).
+    # This test pins the gate BEHAVIOR under a blocked freeze rather than the repository's live
+    # state: an egress-requiring provider must be refused whenever the status is not approved.
+    # The live state itself is pinned by test_live_freeze_status_is_owner_approved below.
+    blocked = dict(FREEZE, status="BLOCKED_HUMAN")
     remote = _RemoteProvider()
 
     with pytest.raises(PermissionError, match="requires network egress"):
@@ -251,9 +255,17 @@ def test_remote_descriptor_is_refused_under_the_repo_freeze() -> None:
             bundles=(_bundle(),),
             analyst_provider=remote,
             adjudicator_provider=remote,
-            freeze=FREEZE,
+            freeze=blocked,
             created_at=CREATED_AT,
         )
+
+
+def test_live_freeze_status_is_owner_approved() -> None:
+    # Governance state pin, mirroring the BLOCKED_HUMAN pin this file carried before the flip:
+    # the egress gate must be OPEN only because an owner approval is recorded in the freeze
+    # artifact (configs/triage_provider_freeze.json approval block, 2026-10-27). Re-blocking the
+    # run requires editing this pin deliberately, not by accident.
+    assert FREEZE["status"] == "HUMAN_APPROVED"
 
 
 def _record_for(records, bundle: EvidenceBundle):

@@ -19,8 +19,9 @@ current repository state:
 
 The orchestrator in :mod:`cluelattice.triage.run` performs the second half of the guarantee: it
 refuses, with a raised error, to run a provider whose descriptor requires egress unless the frozen
-governance artifact explicitly says egress is approved. The freeze is ``BLOCKED_HUMAN``, so a
-remote provider is refused before any work happens.
+governance artifact explicitly says egress is approved. While the freeze status is
+``BLOCKED_HUMAN`` a remote provider is refused before any work happens; the status became
+``HUMAN_APPROVED`` on 2026-10-27 (owner approval recorded in the artifact itself).
 
 **What this module cannot prove.** It cannot prove what a future remote provider does with data once
 a human approves the transport, and a ``REMOTE`` descriptor is a declaration by the caller rather

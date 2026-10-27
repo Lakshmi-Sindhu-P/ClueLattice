@@ -6,8 +6,10 @@ Machine-readable source of truth: [`configs/llm_ab_preregistration.json`](../con
 This document renders that artifact; where the two differ, the JSON governs.
 
 This protocol governs the **independently frozen LLM A/B triage**. The provider run it describes is
-currently **blocked** (see [`configs/triage_provider_freeze.json`](../configs/triage_provider_freeze.json),
-status `BLOCKED_HUMAN`). Writing the protocol before the run is the entire point: an analysis
+currently **approved but not yet executed** (see
+[`configs/triage_provider_freeze.json`](../configs/triage_provider_freeze.json),
+status `HUMAN_APPROVED` since 2026-10-27; the LLM client does not exist yet, so no run has
+happened). Writing the protocol before the run is the entire point: an analysis
 protocol chosen after seeing model output is a story fitted to that output.
 
 ## Hypothesis
@@ -137,16 +139,19 @@ A pre-registration is only meaningful if it **predates the outputs it constrains
 the threshold, or the decision rule were chosen after seeing the numbers, they would be selected to
 fit those numbers, and the "result" would be a description of the data rather than a test of a
 claim. That failure is undetectable from the write-up alone — which is why it must be prevented by
-construction. This protocol was therefore frozen while **nothing has run**: no provider is
-designated, no credential path exists, no assessment has been produced, and the provider freeze
-status is `BLOCKED_HUMAN`.
+construction. This protocol was therefore frozen while **nothing had run**: at freeze time no
+provider was designated, no credential path existed, no assessment had been produced, and the
+provider freeze status was `BLOCKED_HUMAN` (it became `HUMAN_APPROVED` on 2026-10-27; the run
+count is still zero — see `pre_data_attestation.supersedes_observation`).
 
 Two mechanisms keep that claim checkable:
 
-1. **The attestation.** `pre_data_attestation` in the JSON records the observed state at freeze
-   time — `provider_freeze_status` = `BLOCKED_HUMAN`, `measured_spend` = `0 - nothing has been
-   sent`, `provider_runs_completed` = 0, `assessments_on_disk` = 0 — each verified by inspection
-   rather than assumed, with corroborating evidence listed.
+1. **The attestation.** `pre_data_attestation` in the JSON records the observed state at the last
+   read — `provider_freeze_status` = `HUMAN_APPROVED`, `measured_spend` = the exact freeze string
+   (four capability probes on 2026-10-27, 0 experiment runs), `provider_runs_completed` = 0,
+   `assessments_on_disk` = 0 — each verified by inspection rather than assumed, with corroborating
+   evidence listed and the original 2026-10-09 `BLOCKED_HUMAN` observation retained under
+   `supersedes_observation`.
 2. **The ordering check.** `scripts/validate_preregistration.py` requires `frozen_at` to be strictly
    earlier than the `created_at` of every registry run that references a provider or triage run. A
    protocol written after such a run is rejected by executable code, not by convention.

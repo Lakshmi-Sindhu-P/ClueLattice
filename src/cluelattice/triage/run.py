@@ -5,8 +5,9 @@ admission, and the agreement engine — without ever gaining the ability to leak
 
 * It calls :func:`assert_provider_permitted` for both providers **before** any other work. A
   provider whose descriptor requires egress is refused with a raised :class:`PermissionError`
-  unless the freeze artifact's status is explicitly approved. The freeze is ``BLOCKED_HUMAN``, so a
-  remote provider is refused here and no request is ever built for it.
+  unless the freeze artifact's status is explicitly approved. While the status is
+  ``BLOCKED_HUMAN`` a remote provider is refused here and no request is ever built for it; the
+  status became ``HUMAN_APPROVED`` on 2026-10-27, which opens that same gate without weakening it.
 * It never writes to disk and never mutates the incoming bundles. The only side effect is the
   in-memory :class:`TriageRun` it returns.
 * For each bundle it builds the snapshot **once** and sends the byte-identical

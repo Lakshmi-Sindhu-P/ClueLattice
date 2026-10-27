@@ -1,6 +1,13 @@
 {
-  "freeze_version": "1.0.0",
-  "status": "BLOCKED_HUMAN",
+  "freeze_version": "1.1.0",
+  "status": "HUMAN_APPROVED",
+  "approval": {
+    "approved_at": "2026-10-27T05:45:00Z",
+    "approved_by": "owner, via direct instruction in the agent session (rebuild-plan Phase 0); recorded by the agent",
+    "decision": "Approve egress, designate the assessor pair, add the LLM client dependency and credential path, then run the mandated smoke test and the frozen A/B.",
+    "basis": "Option 2 of docs/decision-memo-issue-11.md (issue #11): probe the unverified catalog models first; a cross-family pair that verifies earns approval, otherwise fall back to Option 1 (deferral). Probe result on 2026-10-27: mimo-v2.6-flash and deepseek-v4.1-flash responsive; space-bunny-free unavailable; longcat-2.5-preview-free deprecated.",
+    "status_value": "HUMAN_APPROVED (accepted by APPROVED_EGRESS_FREEZE_STATUSES in src/cluelattice/triage/run.py)"
+  },
   "frozen_at": "2026-10-08T20:15:00Z",
   "decision_ref": "Lakshmi-Sindhu-P/ClueLattice#11",
   "purpose": "Freeze the exact provider and model configuration for the independent A/B triage so the run is reproducible, bounded, and governance-reviewed before any data leaves the machine. This artifact records the configuration without executing it.",
@@ -13,12 +20,12 @@
     "triage_analyst": {
       "role": "independent first assessor",
       "isolation": "receives only the label-free EvidenceBundle snapshot",
-      "configuration": "UNSET - pending owner approval"
+      "configuration": "opencode-go / deepseek-v4.1-flash - designated 2026-10-27 (owner-approved pair, rebuild-plan Phase 0); probed responsive 2026-10-27"
     },
     "expert_adjudicator": {
       "role": "independent second assessor, blind to the first assessment",
       "isolation": "receives the identical snapshot digest as the triage analyst",
-      "configuration": "UNSET - pending owner approval"
+      "configuration": "opencode-go / mimo-v2.6-flash - designated 2026-10-27 (owner-approved pair, rebuild-plan Phase 0); probed responsive 2026-10-27; receives the identical snapshot digest, blind to the first assessment"
     }
   },
   "independence_requirement": {
@@ -39,15 +46,27 @@
       ],
       "verified_working": [
         "deepseek-v4-flash",
-        "deepseek-v4.1-flash"
+        "deepseek-v4.1-flash",
+        "mimo-v2.6-flash"
       ],
-      "verified_working_note": "Both working models are the same family, so they cannot serve as the two independent assessors.",
-      "reasoning_effort_support": "low, high, max for both DeepSeek models; not advertised for the other three"
+      "verified_working_note": "Original observation (2026-10-08): the two DeepSeek variants are one family and cannot pair with each other. Re-probed 2026-10-27: mimo-v2.6-flash also responds, providing the distinct-family pairing.",
+      "reasoning_effort_support": "low, high, max for both DeepSeek models; not advertised for the other three",
+      "reprobe_2026_10_27": {
+        "method": "POST /chat/completions with a single-line capability prompt; the gateway requires a browser-like User-Agent and an x-opencode-session header",
+        "results": {
+          "deepseek-v4.1-flash": "responds (1.4s)",
+          "mimo-v2.6-flash": "responds (8.2s)",
+          "space-bunny-free": "HTTP 400 upstream 'Model is unavailable'",
+          "longcat-2.5-preview-free": "HTTP 410 ModelDeprecated"
+        }
+      }
     },
-    "status": "NOT ESTABLISHED"
+    "status": "ESTABLISHED",
+    "established_at": "2026-10-27",
+    "established_basis": "Two distinct model families verified responsive on 2026-10-27 through the zen/go gateway: deepseek-v4.1-flash (DeepSeek family - deepseek.com) and mimo-v2.6-flash (Xiaomi MiMo family - mimo.xiaomi.com, github.com/XiaomiMiMo). Family identities verified against vendor sources, not inferred from catalog names. Residual note: both models route through one relay gateway (opencode-go); the model families are distinct, the transport path is shared."
   },
   "egress_policy": {
-    "decision": "REVIEWED - content is defensible, transport is not yet approved",
+    "decision": "APPROVED - content defensible (2026-10-08 audit) and transport approved 2026-10-27 via freeze status HUMAN_APPROVED (owner, rebuild-plan Phase 0.2)",
     "audited_at": "2026-10-08T20:10:00Z",
     "audit_method": "built a real EvidenceBundle from the committed fixture and inspected the exact canonical snapshot a provider would receive",
     "snapshot_size_bytes_observed": 1685,
@@ -65,7 +84,18 @@
       "IP addresses do reach the snapshot as evidence, which is inherent: host identity is the grouping key. CTU-13 is a public, published research dataset, so these addresses are already public."
     ],
     "residual_risk": "Egress of public research-dataset addresses to a third-party provider is a governance decision, not a technical one. The provider's retention and training-use terms must be recorded before the first call.",
-    "transport_status": "IMPLEMENTED - offline only. The provider boundary exists (src/cluelattice/triage/provider.py, src/cluelattice/triage/run.py) and MUST refuse any provider whose descriptor requires egress unless the freeze status above is an approved value; under the current BLOCKED_HUMAN status a remote provider is refused with PermissionError. No network-capable import exists in the boundary. Only recorded-replay and stub providers can run."
+    "transport_status": "IMPLEMENTED - gate now open for approved status. The provider boundary (src/cluelattice/triage/provider.py, src/cluelattice/triage/run.py) refuses any provider whose descriptor requires egress unless the freeze status is an approved value; since 2026-10-27 the status is HUMAN_APPROVED, so remote providers are permitted. No network-capable import exists in the boundary itself; the owner-approved LLM client that makes the actual calls is the next implementation stage under issue #11.",
+    "retention_terms": {
+      "recorded_at": "2026-10-27T05:45:00Z",
+      "sequence_note": "Not recorded before the first request: four capability-probe requests (single-line prompt, no project content) were sent earlier the same day under owner-approved Phase 0 probing, before this record was written. No evidence snapshot, corpus record, or dataset content has ever been sent. Recorded here as an honest sequence note.",
+      "gateway": "OpenCode (opencode.ai) zen/go relay, baseURL https://opencode.ai/zen/go/v1",
+      "terms": [
+        "OpenCode Terms of Service (https://opencode.ai/legal/terms-of-service): content sent to third-party models is subject to that model provider's retention policy; OpenCode states it does not retain the content but cannot control third-party retention.",
+        "Go/Zen data-usage clarification (https://github.com/anomalyco/opencode/issues/35102): downstream providers follow zero retention and do not use data for model training, with exceptions for free models; OpenCode's own handling of prompts in transit is not explicitly stated.",
+        "Both designated models are metered (billing_source 'go', not '-free'), so the documented free-model training exception does not apply to this pair."
+      ],
+      "residual_risk": "Prompt content (the label-free snapshot) transits the OpenCode relay to the upstream model provider. The snapshot contents were audited on 2026-10-08 (permitted_payload/prohibited_payloads above). This remains the owner's recorded governance acceptance."
+    }
   },
   "budget": {
     "basis": "bounds the experiment so a runaway loop cannot consume resources before a human reviews interim output",
@@ -79,24 +109,24 @@
       "any response that would be stored without citations",
       "budget exhausted before completion"
     ],
-    "measured_spend": "0 - nothing has been sent"
+    "measured_spend": "0.00 USD - 4 capability-probe requests sent to the zen/go gateway on 2026-10-27 under owner-approved Phase 0 (2 returned a completion, 2 failed: one unavailable, one deprecated); single-line capability prompts only, no project, corpus, or dataset content; 0 experiment runs, 0 assessments, 0 evidence snapshots sent"
   },
   "unmet_conditions": [
     {
       "condition": "provider access",
-      "detail": "The repository has no LLM client and no credential path. pyproject.toml declares only pyarrow, pydantic, and scikit-learn; no HTTP or LLM client exists anywhere in src/; and src/cluelattice/config.py:68 states that only non-secret settings are supported. Adding a client and a credential path is a new dependency and secret-handling decision that requires owner approval.",
-      "status": "BLOCKED_HUMAN"
+      "detail": "Owner approved on 2026-10-27 the addition of a minimal LLM client and secret handling (credential: OPENCODE_API_KEY, stored in the machine credential store, never committed) as part of rebuild-plan Phase 0. Implementation of the client is the next stage under issue #11; until it exists, no experiment call can be made from the repository.",
+      "status": "OWNER_APPROVED_2026_10_27"
     },
     {
       "condition": "assessor independence",
-      "detail": "Every model available in this environment resolves to one provider mirrored twice, and the only two models verified to work are variants of the same family. No pairing currently satisfies the independence requirement.",
-      "status": "BLOCKED_HUMAN"
+      "detail": "Established 2026-10-27: deepseek-v4.1-flash + mimo-v2.6-flash form a distinct-family pair, both probed responsive; see independence_requirement.established_basis and observed_catalog.reprobe_2026_10_27.",
+      "status": "ESTABLISHED_2026_10_27"
     }
   ],
   "smoke_test": {
     "required_before_full_run": true,
     "protocol": "one bundle, both roles, verify the returned payloads are admissible assessments, verify both roles report the identical snapshot digest, and verify the comparison record is produced",
-    "status": "NOT RUN - still blocked on provider access and assessor independence. The smoke test can now be exercised offline against recorded or stub providers to validate the plumbing, but that does NOT satisfy the protocol: it validates structure, not a real assessor, and must never be reported as a triage result."
+    "status": "NOT RUN - egress approved 2026-10-27; still required before the full run (one bundle, both roles, identical snapshot digests, admissible payloads, comparison record produced). Blocked only on the LLM client implementation; runs under budget (the smoke test consumes 2 of the 60 calls)."
   },
-  "next_action_for_owner": "Designate the two assessor configurations, approve a credential path, and set the status above to an approved value - which is the switch that permits egress in code. Alternatively approve deferring the run. The corpus, schemas, isolation, agreement engine, and the provider boundary are complete and independent of this decision; every one of them is offline."
+  "next_action_for_owner": "Implement the owner-approved LLM client (credential path OPENCODE_API_KEY), run the mandated smoke test, then the frozen 20-bundle A/B under the budget caps above. The protocol in configs/llm_ab_preregistration.json stays FROZEN_PRE_DATA - do not edit hypotheses, metrics, or refutation conditions. Report any blocker rather than working around it."
 }
